@@ -1,0 +1,12 @@
+This is a collection of scripts used to grade
+the first assignment in CSCE 155H/RAIK 183H
+in Fall 2015.  The main scripts are grade.php
+and grade.team.php which include the other
+scripts, one for each problem.  The assignment
+is included (hw01.pdf) for reference.  
+
+The scripts use the grading framework classes
+defined in grade.inc.php (TestSuite, TestModule,
+and TestCase).  The script generates HTML output
+and includes collapsible div elements for 
+convenience.
