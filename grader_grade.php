@@ -1,6 +1,6 @@
 <?php
 
-include_once("Grade.php");
+include_once("GradeInc.php");
 $roster = Roster::createRoster($config['mail_file']);
 
 $hwNum         = $_POST["hw_num"];

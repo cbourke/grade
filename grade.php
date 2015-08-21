@@ -1,6 +1,6 @@
 <?php
 
-include_once("Grade.php");
+include_once("GradeInc.php");
 
 $hwNum  = $_POST["hw_num"];
 $login  = $_POST["cse_login"];

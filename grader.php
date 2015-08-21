@@ -1,6 +1,6 @@
 <?php
 
-include_once("Grade.php");
+include_once("GradeInc.php");
 $course = Course::createCourse($config['homework_file']);
 $roster = Roster::createRoster($config['mail_file']);
 
