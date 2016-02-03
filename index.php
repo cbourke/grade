@@ -80,6 +80,12 @@ function validateSubmit() {
 <body onload="redirectHTTPS()">
 <div id="bodyContainer" class="container">
 <h1>Program Grade Checker v<?php print $config['version']; ?></h1>
+<?php
+if(!$course) {
+  print '<div class="alert alert-danger"><strong>Error!</strong> The grader has not been properly setup, please notify your instructor that the homework file has not been synched with the webhandin.</div>';
+  exit(1);
+}
+?>
 <h4><?php print $course->getCourseNumber(); ?></h4>
 
 <p>This web interface allows you to run the same grading script

@@ -8,9 +8,15 @@ $passwd = $_POST["cse_password"];
 $ip = $_SERVER['REMOTE_ADDR'];
 $host = isset($_SERVER['REMOTE_HOST']) ? $_SERVER['REMOTE_HOST'] : "";
 
+$roster = Roster::createRoster($config['mail_file']);
+
 $auth = new CSEAuthenticator($config['authorization_service_token']);
 
-   if($auth->authenticate($login, $passwd)) {
+//if user is authorized...
+if($auth->authenticate($login, $passwd)) {
+  $s = findStudentByLogin($roster->getStudents(), $login);
+  //if student exists
+  if($s !== null) {
      gradeLog("$ip $host $login $hwNum");
      $webhandin_home = $config["webhandin_relative_path"];
      $gradeDir = "$webhandin_home/$hwNum/";
@@ -37,11 +43,15 @@ $auth = new CSEAuthenticator($config['authorization_service_token']);
        $result = "ERROR: Grade script does not appear to have been setup, your instructor either screwed up or didn't care enough to do so.  Oh well.";
      }
 
-  $outputType = $config["script_output"];
-  if($outputType == 1) {
-    print "<pre>$result</pre>";
+    $outputType = $config["script_output"];
+    if($outputType == 1) {
+      print "<pre>$result</pre>";
+    } else {
+      print "$result";
+    }
   } else {
-    print "$result";
+    print "<h1>User Not Enrolled</h1>";
+    print "<p>Your username does not appear to be enrolled in this course.</p>";
   }
 } else {
   gradeLog("UNAUTHORIZED ATTEMPT: $ip $host $login $hwNum");
