@@ -3,7 +3,7 @@
 include_once("GradeInc.php");
 
 $hwNum  = $_POST["hw_num"];
-$login  = $_POST["cse_login"];
+$login  = trim($_POST["cse_login"]);
 $passwd = $_POST["cse_password"];
 $ip = $_SERVER['REMOTE_ADDR'];
 $host = isset($_SERVER['REMOTE_HOST']) ? $_SERVER['REMOTE_HOST'] : "";
