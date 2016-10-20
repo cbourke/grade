@@ -6,7 +6,7 @@ class Student {
   private $login = null;
 
   public function __construct($login, $name = null) {
-    $this->login = $login;
+    $this->login = trim($login);
     $this->name = $name;
   }
 
