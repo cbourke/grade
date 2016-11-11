@@ -1,6 +1,6 @@
 <?php
 
-$config['version'] = "2.4.7";
+$config['version'] = "2.4.8";
 $config['version_date'] = "2016/11/11";
 $config['log_file_name'] = "grade.log";
 
