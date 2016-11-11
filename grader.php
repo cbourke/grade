@@ -53,7 +53,6 @@ function loadIt() {
     method: 'POST',
     data: {
       hw_num: document.grade_form.hw_num.value,
-      cse_login: document.grade_form.cse_login.value,
       student_cse_login: student_login,
       cse_password: document.grade_form.cse_password.value,
     },
