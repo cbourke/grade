@@ -2,9 +2,11 @@
 
 include_once("GradeInc.php");
 $roster = Roster::createRoster($config['mail_file']);
+$course = Course::createCourse($config['homework_file']);
+$courseLogin = $course->getCourseNumber();
 
 $hwNum         = $_POST["hw_num"];
-$login         = $_POST["cse_login"];
+$login         = $courseLogin;
 $student_login = $_POST["student_cse_login"];
 $passwd        = $_POST["cse_password"];
 $ip            = $_SERVER['REMOTE_ADDR'];

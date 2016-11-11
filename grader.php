@@ -15,7 +15,7 @@ $roster = Roster::createRoster($config['mail_file']);
 
   <link href="google-code-prettify-minified/prettify.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="google-code-prettify-minified/prettify.js"></script>
-  
+
 <script type="text/javascript">
 <?php
   $jsArray = "[";
@@ -83,7 +83,7 @@ function loadIt() {
   <table>
     <tr>
       <td>CSE Login</td>
-      <td><input type="text" name="cse_login" value = "<?php print $course->getCourseNumber(); ?>" readonly="true"/></td>
+      <td><?php print $course->getCourseNumber(); ?></td>
     </tr>
     <tr>
       <td>CSE Password</td>
