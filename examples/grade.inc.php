@@ -8,7 +8,7 @@
  */
 abstract class Tester { 
 
-  const version = "2.1.2";
+  const version = "2.1.3";
 
   private static $collapseIdCounter = 100;
   public static $borderStyle = "none;"; //1px solid red;";
@@ -157,13 +157,14 @@ abstract class Tester {
       $result .= "<div style='clear: both;'><h2><span style='cursor: pointer;' onclick='$cmd'>[-]</span> $this</h2></div>\n"; 
     }
 
+    //wrap in a collapsible div here, start...
+    $result .= "<div id='collapseId" . Tester::$collapseIdCounter . "' style='margin-left: 1em;'>";
+
     //add message here
     if(!empty($this->message)) {
       $result .= "<p>" . $this->message . "</p>";
     }
 
-    //wrap in a collapsible div here, start...
-    $result .= "<div id='collapseId" . Tester::$collapseIdCounter . "' style='margin-left: 1em;'>";
 
     if(count($this->requiredFiles) > 0) {
       $result .= "<p>Checking for required files...</p>\n";
