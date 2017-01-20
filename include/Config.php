@@ -1,7 +1,7 @@
 <?php
 
-$config['version'] = "2.4.8";
-$config['version_date'] = "2016/11/11";
+$config['version'] = "2.5.0";
+$config['version_date'] = "2017/01/20";
 $config['log_file_name'] = "grade.log";
 
 //The token is stored in the following system file:
@@ -28,15 +28,6 @@ $config['script_name'] = "grade.php";
 //name of the grading scrip that the grader interface will use
 $config['script_name_grader'] = "grade.team.php";
 
-/*
-; 1 = RAW - the script_name outputs raw output that should be 
-;           displayed verbatim and so the webgrader 
-;           will wrap it in a <pre></pre> tag
-; 2 = HTML - the script_name outputs HTML formatted output that
-;            should *not* be wrapped in a <pre> tag
-*/
-$config['script_output'] = 2;
-
 /**
  * Appends the given message to the log file (as defined in
  * config.php).  Prepends a current date/time stamp and appends an
@@ -50,4 +41,20 @@ function gradeLog($msg) {
   global $config;
   file_put_contents($config["log_file_name"], "$dateStamp $msg\n", FILE_APPEND);
 }
+
+/**
+ * Utility function that formats a bootstrap alert box with
+ * the given title/message.  Optional parameter can be used
+ * for different colors/types: success, info, warning, danger
+ */
+function getBootstrapDiv($title, $message, $type = "danger") {
+
+  $html = '<div class="alert alert-'.$type.' alert-dismissible" role="alert">' .
+          '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' .
+          '<span aria-hidden="true">&times;</span></button>' .
+          '<strong>'.$title.'</strong> '.$message.'</div>';
+
+  return $html;
+}
+
 ?>

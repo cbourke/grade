@@ -15,7 +15,7 @@ $auth = new CSEAuthenticator($config['authorization_service_token']);
 //if user is authorized...
 if($auth->authenticate($login, $passwd)) {
   $s = findStudentByLogin($roster->getStudents(), $login);
-  //if student exists
+  //if student exists...
   if($s !== null) {
      gradeLog("$ip $host $login $hwNum");
      $webhandin_home = $config["webhandin_relative_path"];
@@ -23,40 +23,31 @@ if($auth->authenticate($login, $passwd)) {
      $gradeScript = $config["script_name"];
      $gradeScriptPath = "$gradeDir$gradeScript";
      $userDir = "$webhandin_home/$hwNum/$login";
-     $result = "";
      if(file_exists($gradeScriptPath)) {
        if(file_exists($userDir)) {
          $chdirSuccess = chdir($gradeDir);
          if($chdirSuccess) {
            $cmd = "./$gradeScript " . escapeshellarg($login) . " 2>&1";
-           $result = system($cmd, $exitCode);
-	   if($exitCode !== 0) {
-	     $result .= "WARNING: process exited with code " . $exitCode . " (".$exitCodes[$exitCode] . ")";
-           }
+           system($cmd, $exitCode);
          } else {
-           $result = "ERROR: internal error.";
+           $result = getBootstrapDiv("Error", "Internal Error Occurred");
          }
        } else {
-         $result = "ERROR: well, you gotta hand something in first, noob.";
+         $result = getBootstrapDiv("Error", "You gotta hand something in first, noob.");
        }
      } else {
-       $result = "ERROR: Grade script does not appear to have been setup, your instructor either screwed up or didn't care enough to do so.  Oh well.";
+       $result = getBootstrapDiv("Error", "Grade script does not appear to have been setup, your instructor either screwed up or didn't care enough to do so.  Oh well.");
      }
 
-    $outputType = $config["script_output"];
-    if($outputType == 1) {
-      print "<pre>$result</pre>";
-    } else {
-      print "$result";
-    }
   } else {
-    print "<h1>User Not Enrolled</h1>";
-    print "<p>Your username does not appear to be enrolled in this course.</p>";
+    $result = getBootstrapDiv("User Not Enrolled", "Your username does not appear to be enrolled in this course.");
   }
 } else {
   gradeLog("UNAUTHORIZED ATTEMPT: $ip $host $login $hwNum");
-  print "<h1>Unauthorized Access Attempt</h1>";
-  print "<p>Your username/password was incorrect.  This unauthorized attempt has been logged. Big Brother is watching.</p>";
+  $result = getBootstrapDiv("Unauthorized Access Attempt", "Your username/password was incorrect.  This unauthorized attempt has been logged. Big Brother is watching.");
 }
+
+print $result;
+
 ?>
 
