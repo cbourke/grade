@@ -24,7 +24,7 @@ if(!$auth->authenticate($login, $passwd)) {
                             "Your username/password was incorrect.  This " .
                             "unauthorized attempt has been logged. Big " .
                             "Brother is watching.");
-} else if($s === null) {
+} else if($student === null) {
   //student is not in the roster file
   $result = getBootstrapDiv("User Not Enrolled", "Your username does not appear to be enrolled in this course.");
 } else if(!file_exists($gradeScriptPath)) {
