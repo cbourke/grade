@@ -68,5 +68,5 @@ usual java command, you would use:
 The same limitation would need to be there for the Java compiler:
 `javac -J-Xmx2048m ...`
 
-7. An example grading script written in PHP has been provided (see `/phpExamples`) that can be used to design a testing suite including
+7. An example grading script written in PHP has been provided (see `/examples`) that can be used to design a testing suite including
 pre- and post- test commands.
