@@ -6,9 +6,9 @@
  * including pre and post test commands (command line output is captured and
  * output by the script).
  */
-abstract class Tester { 
+abstract class Tester {
 
-  const version = "2.1.3";
+  const version = "2.1.4";
 
   private static $collapseIdCounter = 100;
   public static $borderStyle = "none;"; //1px solid red;";
@@ -65,6 +65,24 @@ abstract class Tester {
   }
 
   /**
+   * Returns a map of file names => file contents from all files
+   * with the specified $extension contained in the current directory
+   * as well as all subdirectories
+   */
+  public static function getAllFileContents($extension = ".java") {
+
+    $fileContents = array();
+    $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator("./"), RecursiveIteratorIterator::SELF_FIRST);
+    foreach($files as $name => $object){
+      if(substr_compare($name, $extension, -strlen($extension), strlen($extension)) === 0) {
+        $fname = $object->getFilename();
+        $fileContents[$fname] = file_get_contents($name);
+      }
+    }
+    return $fileContents;
+  }
+  
+  /**
    * Formats the given $content inside a collapsible <div> element
    */
   public static function getCollapsibleDiv($title, $content) {
@@ -72,8 +90,8 @@ abstract class Tester {
     //increment the static counter for unique IDs
     Tester::$collapseIdCounter++;
     $jsCommand = "\$(\"#collapseId" . Tester::$collapseIdCounter . "\").toggle(\"blind\"); $(this).text() == \"[-]\"?$(this).text(\"[+]\"):$(this).text(\"[-]\");";
-    $htmlDiv = "<div style='clear: both'><h2><span style='cursor: pointer;' onclick='$jsCommand'>[-]</span> $title</h2></div>\n" . 
-               "<div id='collapseId" . Tester::$collapseIdCounter . "' style='margin-left: 2em;'>" . $content  . "</div>";    
+    $htmlDiv = "<div style='clear: both'><h2><span style='cursor: pointer;' onclick='$jsCommand'>[-]</span> $title</h2></div>\n" .
+               "<div id='collapseId" . Tester::$collapseIdCounter . "' style='margin-left: 2em;'>" . $content  . "</div>";
     return $htmlDiv;
   }
 
@@ -102,7 +120,7 @@ abstract class Tester {
     $fullOutput = "";
     foreach($output as $line) {
       $fullOutput .= $line . "\n";
-    } 
+    }
     if($exitCode > 0) {
       $exitCodeMsg = isset(Tester::$exitCodes[$exitCode]) ? Tester::$exitCodes[$exitCode] : "Unknown";
       $fullOutput .= "WARNING: process exited with a(n) $exitCodeMsg ($exitCode) error code\n";
@@ -144,17 +162,17 @@ abstract class Tester {
 
   public function addRequiredFile($file) {
     $this->requiredFiles[] = $file;
-    return $this; 
-  } 
+    return $this;
+  }
 
   public function run() {
-    
+
     Tester::$collapseIdCounter++;
     $result = "";
 
     if(!empty($this->label)) {
       $cmd = "\$(\"#collapseId" . Tester::$collapseIdCounter . "\").toggle(\"blind\"); $(this).text() == \"[-]\"?$(this).text(\"[+]\"):$(this).text(\"[-]\");";
-      $result .= "<div style='clear: both;'><h2><span style='cursor: pointer;' onclick='$cmd'>[-]</span> $this</h2></div>\n"; 
+      $result .= "<div style='clear: both;'><h2><span style='cursor: pointer;' onclick='$cmd'>[-]</span> $this</h2></div>\n";
     }
 
     //wrap in a collapsible div here, start...
@@ -172,7 +190,7 @@ abstract class Tester {
       foreach($this->requiredFiles as $file) {
         if(!file_exists($file)) {
           $result .= "<p><span style='color: red'>ERROR:</span> Required file $file not handed in, cannot be graded.\n</p>";
-          $fileMissing = true; 
+          $fileMissing = true;
         }
       }
       if($fileMissing) {
@@ -186,7 +204,7 @@ abstract class Tester {
     //only print source code if its a grader
     if($this->isGrader) {
       $sourceFileDivs = "";
-      foreach($this->sourceFiles as $file => $contents) {  
+      foreach($this->sourceFiles as $file => $contents) {
         $divContent = '<pre class="prettyprint linenums"><code">' . htmlentities($contents) . '</code></pre>';
         $collapsibleDiv = self::getCollapsibleDiv($file, $divContent);
 	$sourceFileDivs .= $collapsibleDiv;
@@ -195,7 +213,7 @@ abstract class Tester {
         $result .= self::getCollapsibleDiv("Source Files", $sourceFileDivs);
       }
     }
-    
+
     if(count($this->preTestCommands) > 0) {
       $fullOutput = "";
       foreach($this->preTestCommands as $label => $cmd) {
@@ -224,7 +242,7 @@ abstract class Tester {
         $result .= "<div style='clear: both;'>";
         $result .= "<div style='float: left'>";
         $result .= "<h4>Expected Output</h4>";
-	$result .= "<div style='padding: 10px; border: ".self::$borderStyle."'>"; 
+	$result .= "<div style='padding: 10px; border: ".self::$borderStyle."'>";
         $result .= "<pre>".htmlentities($this->expectedOutput)."</pre>\n";
  	$result .= "</div>"; //end of pre-div
         $result .= "</div>"; //end of float: left
@@ -256,7 +274,7 @@ abstract class Tester {
       }
     }
 
-    //end collapse div started above    
+    //end collapse div started above
     $result .= "</div>";
 
     return $result;
@@ -339,7 +357,7 @@ class TestCase extends Tester {
     return $this;
   }
 
-  protected function executeCommands() { 
+  protected function executeCommands() {
     $result = "";
     if(count($this->testCaseCommands) > 0) {
 
@@ -362,7 +380,7 @@ class TestCase extends Tester {
   }
 
   public function __toString() {
-    return "Test Case $this->label";  
+    return "Test Case $this->label";
   }
 
 }
