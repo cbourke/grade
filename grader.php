@@ -46,6 +46,7 @@ function loadIt() {
 
   var student_login = document.grade_form.student_cse_login.value;
   let title = 'Grading Checker';
+  $(document).prop('title', title);
 
   $("#results").append("<div id='grade_content'><img src='images/loading.gif' alt='loading'/></div>");
 
