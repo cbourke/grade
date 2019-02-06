@@ -45,6 +45,7 @@ function loadIt() {
   $("#results").html("");
 
   var student_login = document.grade_form.student_cse_login.value;
+  let title = 'Grading Checker';
 
   $("#results").append("<div id='grade_content'><img src='images/loading.gif' alt='loading'/></div>");
 
@@ -58,9 +59,11 @@ function loadIt() {
     },
     success: function (data) {
       $('#grade_content').html(data);
+      $(document).prop('title', '\u2714 ' + title);
       prettyPrint();
     },
     error: function (xhr, statusText) {
+      $(document).prop('title', '\u2716 ' + title);
       $('#grade_content').html("<span style='color:red;font-weight:bold'>Internal Server Error</span>");
     },
     dataType: 'html'
