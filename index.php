@@ -31,6 +31,8 @@ function raiseError(msg) {
 }
 
 function validateSubmit() {
+  let title = 'Grading Checker';
+  $(document).prop('title', title);
   $("#errorDiv").empty();
   //butt, huh huh
   var butt = document.getElementById('submitButton');
@@ -63,10 +65,12 @@ function validateSubmit() {
     success: function (data) {
       $('#graderResults').html(data).hide().fadeIn("slow");
       //prettyPrint();
+      $(document).prop('title', '\u2714 ' + title);
       butt.disabled = false;
     },
     error: function (xhr, statusText) {
       $('#graderResults').html("<span style='color:red;font-weight:bold'>Internal Server Error</span>");
+      $(document).prop('title', '\u2716 ' + title);
       butt.disabled = false;
     },
     dataType: 'html'
