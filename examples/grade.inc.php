@@ -85,12 +85,17 @@ abstract class Tester {
   /**
    * Formats the given $content inside a collapsible <div> element
    */
-  public static function getCollapsibleDiv($title, $content) {
+  public static function getCollapsibleDiv($title, $content, $divIsOpen = true) {
     //increment the static counter for unique IDs
     Tester::$collapseIdCounter++;
     $jsCommand = "\$(\"#collapseId" . Tester::$collapseIdCounter . "\").toggle(\"blind\"); $(this).text() == \"[-]\"?$(this).text(\"[+]\"):$(this).text(\"[-]\");";
-    $htmlDiv = "<div style='clear: both'><h2><span style='cursor: pointer;' onclick='$jsCommand'>[+]</span> $title</h2></div>\n" .
+    if($divIsOpen) {
+	  $htmlDiv = "<div style='clear: both'><h2><span style='cursor: pointer;' onclick='$jsCommand'>[-]</span> $title</h2></div>\n" .
+               "<div id='collapseId" . Tester::$collapseIdCounter . "' style='margin-left: 2em;'>" . $content  . "</div>";
+    } else {
+	    $htmlDiv = "<div style='clear: both'><h2><span style='cursor: pointer;' onclick='$jsCommand'>[+]</span> $title</h2></div>\n" .
                "<div id='collapseId" . Tester::$collapseIdCounter . "' style='margin-left: 2em;display:none;'>" . $content  . "</div>";
+    }
     return $htmlDiv;
   }
 
@@ -205,7 +210,7 @@ abstract class Tester {
       $sourceFileDivs = "";
       foreach($this->sourceFiles as $file => $contents) {
         $divContent = '<pre class="prettyprint linenums"><code">' . htmlentities($contents) . '</code></pre>';
-        $collapsibleDiv = self::getCollapsibleDiv($file, $divContent);
+        $collapsibleDiv = self::getCollapsibleDiv($file, $divContent, false);
 	$sourceFileDivs .= $collapsibleDiv;
       }
       if(!empty($sourceFileDivs)) {
