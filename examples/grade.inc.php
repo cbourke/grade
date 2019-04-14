@@ -86,7 +86,6 @@ abstract class Tester {
    * Formats the given $content inside a collapsible <div> element
    */
   public static function getCollapsibleDiv($title, $content) {
-
     //increment the static counter for unique IDs
     Tester::$collapseIdCounter++;
     $jsCommand = "\$(\"#collapseId" . Tester::$collapseIdCounter . "\").toggle(\"blind\"); $(this).text() == \"[-]\"?$(this).text(\"[+]\"):$(this).text(\"[-]\");";
