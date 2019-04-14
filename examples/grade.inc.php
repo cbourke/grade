@@ -90,8 +90,8 @@ abstract class Tester {
     //increment the static counter for unique IDs
     Tester::$collapseIdCounter++;
     $jsCommand = "\$(\"#collapseId" . Tester::$collapseIdCounter . "\").toggle(\"blind\"); $(this).text() == \"[-]\"?$(this).text(\"[+]\"):$(this).text(\"[-]\");";
-    $htmlDiv = "<div style='clear: both'><h2><span style='cursor: pointer;' onclick='$jsCommand'>[-]</span> $title</h2></div>\n" .
-               "<div id='collapseId" . Tester::$collapseIdCounter . "' style='margin-left: 2em;'>" . $content  . "</div>";
+    $htmlDiv = "<div style='clear: both'><h2><span style='cursor: pointer;' onclick='$jsCommand'>[+]</span> $title</h2></div>\n" .
+               "<div id='collapseId" . Tester::$collapseIdCounter . "' style='margin-left: 2em;display:none;'>" . $content  . "</div>";
     return $htmlDiv;
   }
 
