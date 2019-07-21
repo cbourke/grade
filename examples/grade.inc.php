@@ -8,7 +8,7 @@
  */
 abstract class Tester {
 
-  const version = "2.1.4";
+  const version = "2.1.5";
 
   private static $collapseIdCounter = 100;
   public static $borderStyle = "none;"; //1px solid red;";
