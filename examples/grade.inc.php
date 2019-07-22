@@ -247,9 +247,9 @@ abstract class Tester {
  	$result .= "</div>"; //end of pre-div
         $result .= "</div>"; //end of float: left
 	$result .= "</div>"; //end of clear: both
-	$executionOuput = $this->executeCommands();
-	similar_text(preg_replace("/\s/", "", $this->expectedOutput), preg_replace("/\s/", "", $executionOuput), $similarity); // compare the output to the expectation, ignoring whitespace
-	$result .= "<h4>Output Similarity: ".number_format($similarity, 2, '.', '')."%</h4>\n";
+	$executionOutput = $this->executeCommands();
+	similar_text(preg_replace("/\s/", "", $this->expectedOutput), preg_replace("/\s/", "", $executionOutput), $similarity); // compare the output to the expectation, ignoring whitespace
+	$result .= "<h4>Output Similarity: <span style='color: #".($similarity==100 ? "0f0" : dechex($similarity/100*0x10000)).";'>".number_format($similarity, 2, '.', '')."%</span></h4>\n";
 	$result .= $executionOuput;
     } else {
       $result .= $this->executeCommands();
