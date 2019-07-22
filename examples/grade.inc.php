@@ -249,7 +249,7 @@ abstract class Tester {
 	$result .= "</div>"; //end of clear: both
 	$executionOutput = $this->executeCommands();
 	similar_text(preg_replace("/\s/", "", strtolower($this->expectedOutput)), preg_replace("/\s/", "", strtolower($executionOutput)), $similarity); // compare the output to the expectation, ignoring whitespace and case sensetivity
-	$result .= "<h4>Output Similarity: <span style='color: #".($similarity==100 ? "0f0" : "f00".";'>".number_format($similarity, 2, '.', '')."%</span></h4>\n";
+	$result .= "<h4>Output Similarity: <span style='color: #".($similarity==100 ? "0f0" : "f00").";'>".number_format($similarity, 2, '.', '')."%</span></h4>\n";
 	$result .= $executionOuput;
     } else {
       $result .= $this->executeCommands();
