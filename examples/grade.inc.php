@@ -357,9 +357,10 @@ class TestCase extends Tester {
     return $this;
   }
 
-  protected function executeCommands($fullOutput = "") {
+  protected function executeCommands() {
     $result = "";
     if(count($this->testCaseCommands) > 0) {
+      $fullOutput = "";
       foreach($this->testCaseCommands as $cmd) {
         $output = "";
         $exitCode = "";
