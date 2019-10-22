@@ -29,7 +29,7 @@ include_once('grade-cellphone-java.php');
 
 
 
-
+print $testSuite->getLogs();
 print $testSuite->run(); 
 
 ?>
