@@ -33,6 +33,15 @@ if($auth->authenticate($login, $passwd)) {
     $gradeScriptPath = "$gradeDir$gradeScript";
     $userDir = "$webhandin_home/$hwNum/$student_login";
     $result = "";
+    
+    // print the logs of WebGrader usage for the given student for this assignment
+    $grepCmd = "grep '" . $student->getLogin() . " " . $hwNum . "' ./" . $config["log_file_name"] . " | grep -v 'GRADER'";
+    $grepResult = shell_exec($grepCmd);
+    if (strlen($grepResult) == 0) $grepResult = "<p style='color:#F00'>No WebGrader runs recorded</p.";
+    $jsCommand = "\$(\"#collapseIdWGR\").toggle(\"blind\"); $(this).text() == \"[-]\"?$(this).text(\"[+]\"):$(this).text(\"[-]\");";
+    $grepHtmlDiv = "<div style='clear: both'><h2><span style='cursor: pointer;' onclick='$jsCommand'>[-]</span> WebGrader Runs</h2></div>\n" .
+               "<div id='collapseIdWGR' style='margin-left: 2em;'><pre>" . $grepResult . "</pre></div>";
+    $result .= $grepHtmlDiv;
 
     if(file_exists($gradeScriptPath)) {
       if(file_exists($userDir)) {
