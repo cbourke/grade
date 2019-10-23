@@ -4,6 +4,7 @@ class Egg {
 
   private static $easterEggs = array(
 "",
+"You're born naked. The rest is drag.",
 "You're the man now dog.",
 "There are only two important days in your life: the day you are born, and the day you find out why.",
 "There are three things all wise men fear: the sea in storm, a night with no moon, and the anger of a gentle man.",
@@ -24,6 +25,7 @@ The best is yet to be,
 The last of life, for which the first was made",
 "Evil!  Pure and simple from the 8-th dimension!",
 "Oh, InDEED.",
+"From ages past it has been considered ill-omened by samurai to be requested as kaishaku. The reason for this is that one gains no fame even if the job is well done. And if by chance one should blunder, it becomes a lifetime disgrace.",
 "Now I am become Death, the destroyer of worlds",
 "My name is Ozymandias, king of kings: Look on my works, ye Mighty, and despair!",
 "What is best in life? To crush your enemies, to see them driven before you, and to hear the lamentations of their women.",
