@@ -8,7 +8,7 @@
  */
 abstract class Tester {
 
-  const version = "2.2.0";
+  const version = "2.2.1";
   const consoleLogFilePath = "~/public_html/grade/grade.log";
 
   private static $collapseIdCounter = 100;
@@ -32,6 +32,21 @@ abstract class Tester {
       $result .= "<p><span style='color: red; font-weight: bold;'>ERROR: </span>File, $fileName does not exist.  Cannot display contents.</p>";
     }
     return $result;
+  }
+  
+  /**
+   * Creates and returns an HTML div containing log entries for 
+   * the currently graded assignment/login.
+   */
+  public static function getLogs() {
+    $directoryPathNames = explode("/", getcwd());
+    $grepCmd = "grep '" . $directoryPathNames[count($directoryPathNames) - 1] . " " . $directoryPathNames[count($directoryPathNames) - 2] . "' " . self::consoleLogFilePath . " | grep -v 'GRADER'";
+    $grepResult = shell_exec($grepCmd);
+    if (strlen($grepResult) == 0) $grepResult = "<p style='color:#F00'>No WebGrader runs recorded</p.";
+    $jsCommand = "\$(\"#collapseIdWGR\").toggle(\"blind\"); $(this).text() == \"[-]\"?$(this).text(\"[+]\"):$(this).text(\"[-]\");";
+    $grepHtmlDiv = "<div style='clear: both'><h2><span style='cursor: pointer;' onclick='$jsCommand'>[-]</span> WebGrader Runs</h2></div>\n" .
+                "<div id='collapseIdWGR' style='margin-left: 2em;'><pre>" . $grepResult . "</pre></div>";
+    return  $grepHtmlDiv;
   }
 
   /**
@@ -198,7 +213,7 @@ abstract class Tester {
         $result .= "<p><span style='color: red'>ERROR:</span> One or more files missing, skipping the rest of the grading process, hand these in first!</p>";
         //end collapse div here since we short circuit the rest of the grading process...
         $result .= "</div>";
-	return $result;
+	      return $result;
       }
     }
 
@@ -208,7 +223,7 @@ abstract class Tester {
       foreach($this->sourceFiles as $file => $contents) {
         $divContent = '<pre class="prettyprint linenums"><code">' . htmlentities($contents) . '</code></pre>';
         $collapsibleDiv = self::getCollapsibleDiv($file, $divContent);
-	$sourceFileDivs .= $collapsibleDiv;
+	      $sourceFileDivs .= $collapsibleDiv;
       }
       if(!empty($sourceFileDivs)) {
         $result .= self::getCollapsibleDiv("Source Files", $sourceFileDivs);
@@ -219,19 +234,18 @@ abstract class Tester {
       $fullOutput = "";
       foreach($this->preTestCommands as $label => $cmd) {
         $output = "";
-	$exitCode = "";
-	$this->executeCommand($cmd, $output, $exitCode);
+	      $exitCode = "";
+	      $this->executeCommand($cmd, $output, $exitCode);
 
-	if(!empty($output)) {
+	      if(!empty($output)) {
           $output = "<pre>" . htmlentities($output) . "</pre>";
         }
 
         if(is_string($label)) {
           $fullOutput .= self::getCollapsibleDiv($label, $output);
-	} else {
+	      } else {
           $fullOutput .= $output;
-	}
-
+	      }
       }
       if(!empty($fullOutput)) {
         $result .= self::getCollapsibleDiv("Pre Testing Commands", $fullOutput);
@@ -243,12 +257,12 @@ abstract class Tester {
         $result .= "<div style='clear: both;'>";
         $result .= "<div style='float: left'>";
         $result .= "<h4>Expected Output</h4>";
-	$result .= "<div style='padding: 10px; border: ".self::$borderStyle."'>";
+	      $result .= "<div style='padding: 10px; border: ".self::$borderStyle."'>";
         $result .= "<pre>".htmlentities($this->expectedOutput)."</pre>\n";
- 	$result .= "</div>"; //end of pre-div
+ 	      $result .= "</div>"; //end of pre-div
         $result .= "</div>"; //end of float: left
-	$result .= "</div>"; //end of clear: both
-	$result .= $this->executeCommands();
+	      $result .= "</div>"; //end of clear: both
+	      $result .= $this->executeCommands();
     } else {
       $result .= $this->executeCommands();
     }
@@ -268,7 +282,7 @@ abstract class Tester {
           $fullOutput .= self::getCollapsibleDiv($label, $output);
         } else {
           $fullOutput .= $output;
-	}
+	      }
       }
       if(!empty($fullOutput)) {
         $result .= self::getCollapsibleDiv("Post Testing Commands", $fullOutput);
@@ -338,16 +352,14 @@ class TestSuite extends Tester {
     }
     return $result;
   }
-
-  public function getLogs() {
-    $directoryPathNames = explode("/", getcwd());
-    $grepCmd = "grep '" . $directoryPathNames[count($directoryPathNames) - 1] . " " . $directoryPathNames[count($directoryPathNames) - 2] . "' " . self::consoleLogFilePath . " | grep -v 'GRADER'";
-    $grepResult = shell_exec($grepCmd);
-    if (strlen($grepResult) == 0) $grepResult = "<p style='color:#F00'>No WebGrader runs recorded</p.";
-    $jsCommand = "\$(\"#collapseIdWGR\").toggle(\"blind\"); $(this).text() == \"[-]\"?$(this).text(\"[+]\"):$(this).text(\"[-]\");";
-    $grepHtmlDiv = "<div style='clear: both'><h2><span style='cursor: pointer;' onclick='$jsCommand'>[-]</span> WebGrader Runs</h2></div>\n" .
-                "<div id='collapseIdWGR' style='margin-left: 2em;'><pre>" . $grepResult . "</pre></div>";
-    return  $grepHtmlDiv;
+  
+  public function run() {
+    $result = "";
+    if($this->isGrader) {
+      $result .= Tester::getLogs();
+    }
+    $result .= parent::run();
+    return $result;
   }
 
   public function __toString() {
@@ -378,7 +390,7 @@ class TestCase extends Tester {
         $output = "";
         $exitCode = "";
         $this->executeCommand($cmd, $output, $exitCode);
-	$fullOutput .= $output;
+	      $fullOutput .= $output;
       }
 
       //if there was no expected output, float it left:

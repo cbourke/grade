@@ -27,9 +27,6 @@ include_once('grade-timedilation-java.php');
 include_once('grade-halflife-c.php');
 include_once('grade-cellphone-java.php');
 
-
-
-print $testSuite->getLogs();
 print $testSuite->run(); 
 
 ?>
