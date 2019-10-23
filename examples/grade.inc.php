@@ -275,14 +275,8 @@ abstract class Tester {
         $this->executeCommand($cmd, $output, $exitCode);
 
         if(!empty($output)) {
-          $output = "<pre>" . htmlentities($output) . "</pre>";
+          $fullOutput = "<pre>" . htmlentities($output) . "</pre>";
         }
-
-        if(is_string($label)) {
-          $fullOutput .= self::getCollapsibleDiv($label, $output);
-        } else {
-          $fullOutput .= $output;
-	      }
       }
       if(!empty($fullOutput)) {
         $result .= self::getCollapsibleDiv("Post Testing Commands", $fullOutput);
