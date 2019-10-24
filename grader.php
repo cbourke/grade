@@ -114,7 +114,7 @@ function loadIt() {
     </tr>
     <tr>
       <td></td>
-      <td><input type="button" value = "Grade Them!" onclick="loadIt();"/>
+      <td><input id="gradeBtn" type="button" value = "Grade Them!" onclick="loadIt();"/>
       </td>
     </tr>
 
