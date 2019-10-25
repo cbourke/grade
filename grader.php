@@ -15,6 +15,7 @@ $roster = Roster::createRoster($config['mail_file']);
 
   <link href="google-code-prettify-minified/prettify.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="google-code-prettify-minified/prettify.js"></script>
+  <script src="js/hotkey.js"></script>
 
 <script type="text/javascript">
 <?php
@@ -114,7 +115,7 @@ function loadIt() {
     </tr>
     <tr>
       <td></td>
-      <td><input type="button" value = "Grade Them!" onclick="loadIt();"/>
+      <td><input id="submitButton" type="button" value = "Grade Them!" onclick="loadIt();"/>
       </td>
     </tr>
 
