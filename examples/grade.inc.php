@@ -373,12 +373,12 @@ class TestCase extends Tester {
   /**
    * $timeout allows you to specify a default kill switch for a given command, specified in an int number of seconds
    */
-  public function addTestCaseCommand($cmd, $timeout = null) {
+  public function addTestCaseCommand($cmd, $timeout = null, $timeoutMessage = "Infinite Loop") {
     $executableCmd = "";
     if ($timeout == null || !is_int($timeout)) {
       $executableCmd = $cmd;
     } else {
-      $executableCmd = "timeout " . $timeout . " " . $cmd  . " || [ $? -eq 0 ] || echo 'Infinite loop'";
+      $executableCmd = "timeout " . $timeout . " " . $cmd  . " || [ $? -eq 0 ] || echo '". $timeoutMessage . "'";
     }
     $this->testCaseCommands[] = $executableCmd;
     return $this;
