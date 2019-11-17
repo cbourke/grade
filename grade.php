@@ -16,6 +16,7 @@ $gradeDir        = "$handinHome/$hwNum/";
 $gradeScript     = $config["script_name"];
 $gradeScriptPath = "$gradeDir$gradeScript";
 $userDir         = "$handinHome/$hwNum/$login";
+$timeout         = $config['global_timeout'];
 
 if(!$auth->authenticate($login, $passwd)) {
   //user is not authorized
@@ -43,8 +44,15 @@ if(!$auth->authenticate($login, $passwd)) {
   //all is good, go ahead and grade
   gradeLog("$ip $host $login $hwNum");
   chdir($gradeDir);
-  $cmd = "./$gradeScript " . escapeshellarg($login) . " 2>&1";
+  $cmd = "timeout $timeout ./$gradeScript " . escapeshellarg($login) . " 2>&1";
   system($cmd, $exitCode);
+  if($exitCode === 124) {
+    //by default, timeout results in an exit code of 124, so 
+    //we give them a different message:
+    $result = getBootstrapDiv("Error", "Program(s) timed out.  You may have an infinite loop or extremely inefficient program.");
+  }
+  //else, it is the script's responsibility to produce/print
+  //output
 }
 print $result;
 

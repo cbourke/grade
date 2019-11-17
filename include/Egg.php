@@ -11,6 +11,7 @@ class Egg {
 "Beware the Fury of a Patient Man",
 "At Least I Have Chicken",
 "Happy Life Day!",
+"Join the Nintendo Fun Club today! Mac.",
 "cash rules everything around me cream get the money, dolla dolla bills yall",
 "That is not dead which can eternal lie, And with strange aeons even death may die.",
 "Here comes a special boy!",

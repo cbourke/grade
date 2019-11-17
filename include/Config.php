@@ -1,7 +1,7 @@
 <?php
 
-$config['version'] = "2.5.1";
-$config['version_date'] = "2017/01/21";
+$config['version'] = "2.6.0";
+$config['version_date'] = "2019/11/17";
 $config['log_file_name'] = "grade.log";
 
 //The token is stored in the following system file:
@@ -27,6 +27,9 @@ $config['script_name'] = "grade.php";
 
 //name of the grading scrip that the grader interface will use
 $config['script_name_grader'] = "grade.team.php";
+
+//global script timeout duration (seconds)
+$config['global_timeout'] = 150;
 
 /**
  * Appends the given message to the log file (as defined in
