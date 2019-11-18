@@ -11,6 +11,7 @@ $student_login = $_POST["student_cse_login"];
 $passwd        = $_POST["cse_password"];
 $ip            = $_SERVER['REMOTE_ADDR'];
 $host          = $_SERVER['REMOTE_HOST'];
+$timeout       = $config['global_timeout'];
 
 $auth = new CSEAuthenticator($config['authorization_service_token']);
 
@@ -38,9 +39,15 @@ if($auth->authenticate($login, $passwd)) {
       if(file_exists($userDir)) {
         $chdirSuccess = chdir($gradeDir);
         if($chdirSuccess) {
-          $cmd = "./$gradeScript " . escapeshellarg($student_login) . " 2>&1";
-          $cmd_result = system($cmd);
-          $result = $result . $cmd_result;
+          $cmd = "timeout $timeout ./$gradeScript " . escapeshellarg($student_login) . " 2>&1";
+          $cmd_result = system($cmd, $exitCode);
+          if($exitCode === 124) {
+            //by default, timeout results in an exit code of 124, so 
+            //we give them a different message:
+            $result = "Error: Program(s) timed out.  You may have an infinite loop or extremely inefficient program.";
+          } else {
+            $result = $result . $cmd_result;
+          }
         } else {
           $result = "<p>Invalid directory</p>";
         }
