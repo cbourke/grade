@@ -40,7 +40,7 @@ abstract class Tester {
    */
   public static function getLogs() {
     $directoryPathNames = explode("/", getcwd());
-    $grepCmd = "grep '" . $directoryPathNames[count($directoryPathNames) - 1] . " " . $directoryPathNames[count($directoryPathNames) - 2] . "' " . self::consoleLogFilePath . " | grep -v 'GRADER' | grep -v 'UNAUTHORIZED'";
+    $grepCmd = "grep '" . $directoryPathNames[count($directoryPathNames) - 1] . " " . $directoryPathNames[count($directoryPathNames) - 2] . "' " . self::consoleLogFilePath . " | egrep -v 'GRADER|UNAUTHORIZED'";
     $grepResult = shell_exec($grepCmd);
     if (strlen($grepResult) == 0) $grepResult = "<p style='color:#F00'>No WebGrader runs recorded</p.";
     $jsCommand = "\$(\"#collapseIdWGR\").toggle(\"blind\"); $(this).text() == \"[-]\"?$(this).text(\"[+]\"):$(this).text(\"[-]\");";
