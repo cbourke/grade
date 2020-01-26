@@ -5,18 +5,20 @@ include_once("GradeInc.php");
 $course = Course::createCourse($config['homework_file']);
 
 ?>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+<meta charset="UTF-8">
 <head>
   <title>Grading Checker</title>
 
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+
   <script src="js/hotkey.js"></script>
 
 <script type="text/javascript">
@@ -31,23 +33,26 @@ function raiseError(msg) {
   $("#errorDiv").append(newDiv).hide().fadeIn("slow");
 }
 
+function restoreButton() {
+  $("#submitButton").removeClass("disabled").prop("disabled",false);
+}
+
 function validateSubmit() {
   let title = 'Grading Checker';
   $(document).prop('title', title);
   $("#errorDiv").empty();
-  //butt, huh huh
-  var butt = document.getElementById('submitButton');
-  butt.disabled = true;
+  $("#submitButton").addClass("disabled").prop("disabled",true);
+  
   var hwNum = $("#hw_num").val();
   var login = $("#cse_login").val();
 
   if(hwNum < 0) {
     raiseError("You must choose a valid assignment number.");
-    butt.disabled = false;
+    restoreButton();
     return false;
   } else if(!login || login === '') {
     raiseError("Enter your login.");
-    butt.disabled = false;
+    restoreButton();
     return false;
   }
 
@@ -65,14 +70,16 @@ function validateSubmit() {
     },
     success: function (data) {
       $('#graderResults').html(data).hide().fadeIn("slow");
-      //prettyPrint();
+      //add necessary classes for google code prettifier
+      //$('pre').addClass('prettyprint linenums');
+      //PR.prettyPrint();
       $(document).prop('title', '\u2714 ' + title);
-      butt.disabled = false;
+      restoreButton();
     },
     error: function (xhr, statusText) {
       $('#graderResults').html("<span style='color:red;font-weight:bold'>Internal Server Error</span>");
       $(document).prop('title', '\u2716 ' + title);
-      butt.disabled = false;
+      restoreButton();
     },
     dataType: 'html'
   });
@@ -80,6 +87,28 @@ function validateSubmit() {
   return false;
 }
 </script>
+
+<script src="./google-code-prettify/run_prettify.js" defer></script>
+
+<style type="text/css">
+
+/* Necessary for wrapping long lines, 
+   however it only breas on whitespace;
+   very long lines of "data" will still 
+   extend past the pre area.  */
+pre {
+  white-space: pre-wrap;
+  border: 1px solid #d3d3d3;
+  padding: 10px;
+}
+
+/* Necessary for line numbering on every line */
+li.L0, li.L1, li.L2, li.L3,
+li.L5, li.L6, li.L7, li.L8 {
+  list-style-type: decimal !important;
+}
+</style>
+
 </head>
 
 <body onload="redirectHTTPS()">
@@ -101,24 +130,19 @@ that we use in evaluating and grading your program(s).</p>
 <div class="container">
 <h4>Grade My Program</h4>
 
-<form class="form-horizontal" name="grade_form" action="grade.php" method="post" onsubmit="return validateSubmit()">
+<form class="col-md-6" name="grade_form" action="grade.php" method="post" onsubmit="return validateSubmit()">
   <div class="form-group">
-    <label for="cse_login" class="col-sm-2 control-label">Login</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="cse_login" placeholder="CSE Login">
-    </div>
+    <label for="cse_login">Login</label>
+    <input type="text" class="form-control" id="cse_login" placeholder="CSE Login">
   </div>
   <div class="form-group">
-    <label for="cse_password" class="col-sm-2 control-label">Password</label>
-    <div class="col-sm-6">
-      <input type="password" class="form-control" id="cse_password" placeholder="CSE Password">
-    </div>
+    <label for="cse_password">Password</label>
+    <input type="password" class="form-control" id="cse_password" placeholder="CSE Password">
   </div>
   <div class="form-group">
-    <label for="hw_num" class="col-sm-2 control-label">Assignment</label>
-    <div class="col-sm-6">
+    <label for="hw_num">Assignment</label>
 
-<select id="hw_num" name="hw_num" class="form-control">
+<select id="hw_num" name="hw_num" class="custom-select mr-sm-2">
 <option value="-1">(choose)</option>
 <?php
   foreach ($course->getAssignments() as $assign) {
@@ -131,17 +155,12 @@ that we use in evaluating and grading your program(s).</p>
   }
 ?>
 </select>
-    <p style="opacity: .75">Disabled assignments cannot be graded as the grade script has not been setup.</p>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button id="submitButton" type="submit" class="btn btn-primary">Grade Me</button>
+    <small class="form-text text-muted">Disabled assignments cannot be graded as the grade script has not been setup.</small>
 
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalHelp">Help</button>
-
-    </div>
   </div>
+  <button id="submitButton" type="submit" class="btn btn-primary active">Grade Me</button>
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalHelp">Help</button>
+
 </form>
 </div>
 
