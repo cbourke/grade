@@ -1,6 +1,6 @@
 <?php
 
-$config['version'] = "2.6.1";
+$config['version'] = "2.7.0";
 $config['version_date'] = "2020/01/26";
 $config['log_file_name'] = "grade.log";
 
