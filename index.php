@@ -7,8 +7,9 @@ $course = Course::createCourse($config['homework_file']);
 ?>
 <!doctype html>
 <html lang="en">
-<meta charset="UTF-8">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Grading Checker</title>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
