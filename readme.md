@@ -23,7 +23,7 @@ A short tutorial video has been made available: https://www.youtube.com/watch?v=
 on your umask and/or shell settings.  In general you will need to
 set the following permissions in the `~/public_html/grade/` directory:
     * `chmod 644 images/*`
-    * `chmod 644 google-code-prettify-minified/*`
+    * `chmod 644 google-code-prettify/*`
 
 2. Inform your students that they can access the grader interface
 by pointing their browser to https://cse.unl.edu/~classAcct/grade
