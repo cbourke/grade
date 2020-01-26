@@ -1,7 +1,7 @@
 <?php
 
-$config['version'] = "2.6.0";
-$config['version_date'] = "2019/11/17";
+$config['version'] = "2.6.1";
+$config['version_date'] = "2020/01/26";
 $config['log_file_name'] = "grade.log";
 
 //The token is stored in the following system file:
