@@ -1,6 +1,9 @@
 <?php
 
-$config['version'] = "2.7.0";
+// change this to provide a link to your course home page in your navigation bar
+$config['homepage'] = "";
+
+$config['version'] = "2.7.1";
 $config['version_date'] = "2020/01/26";
 $config['log_file_name'] = "grade.log";
 
