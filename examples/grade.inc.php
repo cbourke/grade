@@ -8,7 +8,7 @@
  */
 abstract class Tester {
 
-  const version = "2.2.1";
+  const version = "2.2.2";
   const consoleLogFilePath = "~/public_html/grade/grade.log";
 
   private static $collapseIdCounter = 100;
@@ -39,8 +39,16 @@ abstract class Tester {
    * the currently graded assignment/login.
    */
   public static function getLogs() {
-    $directoryPathNames = explode("/", getcwd());
-    $grepCmd = "grep '" . $directoryPathNames[count($directoryPathNames) - 1] . " " . $directoryPathNames[count($directoryPathNames) - 2] . "' " . self::consoleLogFilePath . " | egrep -v 'GRADER|UNAUTHORIZED'";
+    
+    $path = getcwd();
+    $subPath = substr($path, 19); //assumes "/home/grad/Classes/..."
+    $tokens = explode('/', $subPath);
+    $class = $tokens[0];
+    $assignNum = $tokens[2];
+    $login = $tokens[3];
+
+    $grepCmd = "grep '" . $login . " " . $assignNum . "' " . self::consoleLogFilePath . " | egrep -v 'GRADER|UNAUTHORIZED'";
+
     $grepResult = shell_exec($grepCmd);
     if (strlen($grepResult) == 0) $grepResult = "<p style='color:#F00'>No WebGrader runs recorded</p.";
     $jsCommand = "\$(\"#collapseIdWGR\").toggle(\"blind\"); $(this).text() == \"[-]\"?$(this).text(\"[+]\"):$(this).text(\"[-]\");";
