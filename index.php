@@ -142,7 +142,7 @@ li.L5, li.L6, li.L7, li.L8 {
             <a class="dropdown-item" href="https://cse.unl.edu/faq" target="_blank">System FAQ</a>
             <a class="dropdown-item" href="https://cse.unl.edu/" target="_blank">Department Home</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item">Version <?php print $config['version']; ?></a>
+            <a class="dropdown-item" href="https://github.com/cbourke/grade/">Version <?php print $config['version']; ?></a>
           </div>
       </li>
     </ul>
