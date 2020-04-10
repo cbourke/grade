@@ -8,7 +8,7 @@
  */
 abstract class Tester {
 
-  const version = "2.2.2";
+  const version = "2.2.3";
   const consoleLogFilePath = "~/public_html/grade/grade.log";
 
   private static $collapseIdCounter = 100;

@@ -30,16 +30,24 @@ $roster = Roster::createRoster($config['mail_file']);
   $students = $roster->getStudents();
   $n = count($students);
   for($i=0; $i<$n-1; $i++) {
-    $jsArray .= "\"" . $students[$i]->getLogin() . "\", ";
+    $jsArray .= sprintf("{ value: '%s', label: '%s %s'}, ", $students[$i]->getLogin(), $students[$i]->getLogin(), $students[$i]->getName());
   }
-  $jsArray .= "\"" . $students[$n-1]->getLogin() . "\"]\n";
+  $jsArray .= sprintf("{ value: '%s', label: '%s %s'}]", $students[$n-1]->getLogin(), $students[$i]->getLogin(), $students[$n-1]->getName());
 ?>
 $loginArray = <?php print $jsArray; ?>;
 $(document).ready(function() {
     $("#student_cse_login").autocomplete({
-    source: $loginArray
-});
+    source: $loginArray,
+    focus: function( event, ui ) {
+      $( "#student_cse_login" ).val( ui.item.value );
+        return false;
+    },
+    select: function( event, ui ) {
+      $( "#student_cse_login" ).val( ui.item.value );
+      return false;
+    }
   });
+});
 
 function redirectHTTPS() {
   if (window.location.protocol != "https:") {
@@ -52,7 +60,11 @@ function loadIt() {
   $("#results_header").html("Individual Grade Results");
   $("#results").html("");
 
-  var student_login = document.grade_form.student_cse_login.value;
+  var studentLogin = document.grade_form.student_cse_login.value;
+  index = studentLogin.indexOf(' ');
+  studentLogin = index > 0 ? studentLogin.substr(0,index) : studentLogin;
+  document.grade_form.student_cse_login.value = studentLogin;
+
   let title = 'Grading Checker';
   $(document).prop('title', title);
 
@@ -63,7 +75,7 @@ function loadIt() {
     method: 'POST',
     data: {
       hw_num: document.grade_form.hw_num.value,
-      student_cse_login: student_login,
+      student_cse_login: studentLogin,
       cse_password: document.grade_form.cse_password.value,
     },
     success: function (data) {
