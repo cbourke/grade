@@ -4,6 +4,7 @@ class Egg {
 
   private static $easterEggs = array(
 "",
+"Oh, Jacopo, let's!  I'd love to have your homunculus, and then we could keep it like a dachshund.",
 "You're born naked. The rest is drag.",
 "You're the man now dog.",
 "There are only two important days in your life: the day you are born, and the day you find out why.",
