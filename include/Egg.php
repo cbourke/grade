@@ -4,6 +4,7 @@ class Egg {
 
   private static $easterEggs = array(
 "",
+"There is a cult of ignorance in the United States, and there has always been. The strain of anti-intellectualism has been a constant thread winding its way through our political and cultural life, nurtured by the false notion that democracy means that 'my ignorance is just as good as your knowledge.",
 "Oh, Jacopo, let's!  I'd love to have your homunculus, and then we could keep it like a dachshund.",
 "You're born naked. The rest is drag.",
 "You're the man now dog.",
