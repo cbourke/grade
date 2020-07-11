@@ -124,9 +124,9 @@ li.L5, li.L6, li.L7, li.L8 {
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <?php 
-          if( $config['homepage'] ) {
+          if( $course && $config['homepage'] ) {
             print '<a class="nav-link" target="_blank" href="' . $config['homepage'] . '">' . $course->getCourseNumber() . '</a>';
-          } else {
+          } else if ($course) {
             print '<a class="nav-link">' . $course->getCourseNumber() . '</a>';
           }
         ?>
