@@ -188,19 +188,25 @@ li.L5, li.L6, li.L7, li.L8 {
           <div class="col-sm-9">
             <select name="hw_num" class="custom-select" id="hw_num">
               <option value="-1">(choose)</option>
-      <?php
-        foreach ($course->getAssignments() as $assign) {
-         $option = "<option value=\"".$assign->getNumber()."\"";
-         if(!$assign->hasGradeScript()) {
-           $option .= " disabled=\"disabled\"";
-         }
-         $option .= ">".$assign->getNumber()." ".$assign->getLabel()."</option>\n";
-         print $option;
-        }
-      ?>
-      </select>
+              <?php
+                foreach ($course->getAssignments() as $assign) {
+                 $option = "<option value=\"".$assign->getNumber()."\"";
+                 if(!$assign->hasGradeScript()) {
+                   $option .= " disabled=\"disabled\"";
+                 }
+                 $option .= ">".$assign->getNumber()." ".$assign->getLabel()."</option>\n";
+                 print $option;
+                }
+              ?>
+            </select>
           <small class="form-text text-muted">Disabled assignments cannot be graded as the grade script has not been setup.</small>
-          </div>
+          <?php 
+            if(count($course->getAssignments()) == 0) {
+              $div = getBootstrapDiv("Error!", "The grader has not been properly setup, please notify your instructor that the homework file has not been synched with the webhandin.");
+              print $div;
+            }
+           ?>  
+         </div><!-- /.col-sm-9 -->
         </div>
         <div class="form-group row">
           <label for="cse_password" class="col-sm-3 col-form-label">&nbsp;</label>
