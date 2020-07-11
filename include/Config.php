@@ -3,8 +3,8 @@
 // change this to provide a link to your course home page in your navigation bar
 $config['homepage'] = "";
 
-$config['version'] = "2.7.2";
-$config['version_date'] = "2020/04/09";
+$config['version'] = "2.7.3";
+$config['version_date'] = "2020/07/10";
 $config['log_file_name'] = "grade.log";
 
 //The token is stored in the following system file:

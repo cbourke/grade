@@ -28,12 +28,12 @@ class Course {
 
   public static function createCourse($file) {
 
+    $result = new Course();
     if(!file_exists($file)) {
-      return false;
+      return $result;
     }
     $handle = fopen($file, "r");
 
-    $result = new Course();
     while(!feof($handle)) {
       $line = fgets($handle);
       $line = trim($line);
@@ -58,10 +58,5 @@ class Course {
   }
     									
 }
-
-
-//$b = Course::createCourse("../../homework");
-//print "$b\n";
-
 
 ?>
