@@ -47,6 +47,7 @@ function get_username() {
 
 function logout() {
     global $casService,$thisService;
+    $thisService = str_replace('logout.php', '', $thisService);
 
     if (isset($_SESSION['cas_user'])) {
         unset($_SESSION['cas_user']);
