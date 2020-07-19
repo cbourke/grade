@@ -8,14 +8,12 @@ $courseLogin = $course->getCourseNumber();
 $hwNum         = $_POST["hw_num"];
 $login         = $courseLogin;
 $student_login = $_POST["student_cse_login"];
-$passwd        = $_POST["cse_password"];
+$grader_login  = $_POST['grader_login'];
 $ip            = $_SERVER['REMOTE_ADDR'];
 $host          = $_SERVER['REMOTE_HOST'];
 $timeout       = $config['global_timeout'];
 
-$auth = new CSEAuthenticator($config['authorization_service_token']);
-
-if($auth->authenticate($login, $passwd)) {
+if($grader_login === get_username() && $grader_login === $course->getCourseNumber()) {
 
   gradeLog("GRADER ATTEMPT: $ip $host $student_login $hwNum");
 
@@ -65,7 +63,7 @@ if($auth->authenticate($login, $passwd)) {
 
 } else {
   printf("<span style='color: red; font-weight: bold'>ERROR: </span> Unauthorized attempt");
-  gradeLog("UNAUTHORIZED GRADER ATTEMPT: $ip $host $student_login $hwNum");
+  gradeLog("UNAUTHORIZED GRADER ATTEMPT: $ip $host $grader_login - $student_login $hwNum");
 }
 
 ?>

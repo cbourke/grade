@@ -3,18 +3,9 @@
 // change this to provide a link to your course home page in your navigation bar
 $config['homepage'] = "";
 
-$config['version'] = "2.7.3";
-$config['version_date'] = "2020/07/10";
+$config['version'] = "2.8.0";
+$config['version_date'] = "2020/07/19";
 $config['log_file_name'] = "grade.log";
-
-//The token is stored in the following system file:
-include_once('/srv/www/php/include/WebGrader.php');
-//check that it was included properly:
-if( isset($webGraderAuthToken) ) {
-  $config['authorization_service_token'] = $webGraderAuthToken;
-} else {
-  printf("ERROR: unable to load token\n");
-}
 
 //path to the webhandin directory relative to the grade app
 $config['webhandin_relative_path'] = "../../handin/";
