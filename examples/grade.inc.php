@@ -8,7 +8,7 @@
  */
 abstract class Tester {
 
-  const version = "2.2.3";
+  const version = "2.2.4";
   const consoleLogFilePath = "~/public_html/grade/grade.log";
 
   private static $collapseIdCounter = 100;
@@ -130,7 +130,7 @@ abstract class Tester {
   private $sourceFiles;
   private $preTestCommands;
   private $postTestCommands;
-  private $requiredFiles;
+  private $requiredFiles = array();
 
   public function __construct($label = null, $expectedOutput = null, $isGrader = false) {
     $this->label = $label;
