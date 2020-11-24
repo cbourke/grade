@@ -10,7 +10,7 @@ $hwNum         = $_POST["hw_num"];
 $login         = $courseLogin;
 $student_login = $_POST["student_cse_login"];
 $grader_login  = $_POST['grader_login'];
-$grader        = findStudentByLogin($ta_roster->getStudents(), $grader_login);
+$grader        = $ta_roster == null ? null : findStudentByLogin($ta_roster->getStudents(), $grader_login);
 $ip            = $_SERVER['REMOTE_ADDR'];
 $host          = $_SERVER['REMOTE_HOST'];
 $timeout       = $config['global_timeout'];

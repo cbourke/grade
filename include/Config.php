@@ -16,7 +16,7 @@ $config['homework_file'] = "../../homework";
 //mail file
 $config['mail_file'] = "../../mail.list";
 
-//(g)ta mail file
+//(g)ta mail file (Optional to setup. Permits TA's, GTA's, and instructors to grade without logging in as the course)
 $config['ta_mail_file'] = "../../gta-mail.list";
 
 //name of the grading script that the grade app will use
