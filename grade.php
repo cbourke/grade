@@ -16,7 +16,11 @@ $gradeScriptPath = "$gradeDir$gradeScript";
 $userDir         = "$handinHome/$hwNum/$login";
 $timeout         = $config['global_timeout'];
 
-if($login !== get_username()) {
+$username_for_ticket = get_username();
+if ($username_for_ticket === "TIMED_OUT_USER") {
+    gradeLog("UNAUTHORIZED ATTEMPT - EXPIRED TICKET: $ip $host $login $hwNum");
+    $result = getBootstrapDiv("Expired Session", "<a onclick=\"window.location.href = window.location.href.split('?')[0].replace(/\/$/, '')\">Click here to reset</a>");
+} else if($login !== $username_for_ticket) {
   //user is not authorized
   gradeLog("UNAUTHORIZED ATTEMPT: $ip $host $login $hwNum");
   $result = getBootstrapDiv("Unauthorized Access Attempt",
@@ -55,4 +59,5 @@ if($login !== get_username()) {
 print $result;
 
 ?>
+
 

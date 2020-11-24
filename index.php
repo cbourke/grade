@@ -51,8 +51,10 @@ $username = get_username();
             $("#errorDiv").empty();
             $("#submitButton").addClass("disabled").prop("disabled", true);
 
-            var hwNum = $("#hw_num").val();
-            var login = $("#cse_login").val();
+            let hwNum = $("#hw_num").val();
+            let login = $("#cse_login").val();
+            let urlParams = new URLSearchParams(window.location.search);
+            let ticket = urlParams.get('ticket');
 
             if (hwNum < 0) {
                 raiseError("You must choose a valid assignment number.");
@@ -74,6 +76,7 @@ $username = get_username();
                 data: {
                     hw_num: hwNum,
                     cse_login: '<?php echo $username; ?>',
+                    ticket,
                 },
                 success: function (data) {
                     $('#graderResults').html(data).hide().fadeIn("slow");
@@ -313,3 +316,4 @@ $username = get_username();
 </div>
 
 </html>
+
