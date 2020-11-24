@@ -2,6 +2,7 @@
 
 include_once("GradeInc.php");
 $roster = Roster::createRoster($config['mail_file']);
+$ta_roster = Roster::createRoster($config['ta_mail_file']);
 $course = Course::createCourse($config['homework_file']);
 $courseLogin = $course->getCourseNumber();
 
@@ -9,12 +10,18 @@ $hwNum         = $_POST["hw_num"];
 $login         = $courseLogin;
 $student_login = $_POST["student_cse_login"];
 $grader_login  = $_POST['grader_login'];
+$grader        = findStudentByLogin($ta_roster->getStudents(), $grader_login);
 $ip            = $_SERVER['REMOTE_ADDR'];
 $host          = $_SERVER['REMOTE_HOST'];
 $timeout       = $config['global_timeout'];
 
-if($grader_login === get_username() && $grader_login === $course->getCourseNumber()) {
 
+$username_for_ticket = get_username();
+gradeLog($username_for_ticket);
+if ($username_for_ticket === "TIMED_OUT_USER") {
+  gradeLog("UNAUTHORIZED ATTEMPT - EXPIRED TICKET: $ip $host $grader_login $hwNum");
+  $result = getBootstrapDiv("Expired Session", "<a onclick=\"window.location.href = window.location.href.split('?')[0].replace(/\/$/, '')\">Click here to reset</a>");
+} else if($grader_login === $username_for_ticket && ($grader_login === $courseLogin || $grader != null)) {
   gradeLog("GRADER ATTEMPT: $ip $host $student_login $hwNum");
 
   $students = $roster->getStudents();
@@ -60,10 +67,10 @@ if($grader_login === get_username() && $grader_login === $course->getCourseNumbe
   } else {
     printf("<span style='color: red; font-weight: bold'>ERROR: </span> Unable to find student, $student_login");
   }
-
 } else {
-  printf("<span style='color: red; font-weight: bold'>ERROR: </span> Unauthorized attempt");
+  $result = "<span style='color: red; font-weight: bold'>ERROR: </span> Unauthorized attempt";
   gradeLog("UNAUTHORIZED GRADER ATTEMPT: $ip $host $grader_login - $student_login $hwNum");
 }
 
 ?>
+

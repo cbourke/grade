@@ -5,7 +5,12 @@ include_once("GradeInc.php");
 $course = Course::createCourse($config['homework_file']);
 
 $username = get_username();
-
+if ($username === "TIMED_OUT_USER") {
+    login();
+} else if ($username == $course->getCourseNumber()) {
+    $grader_url = dirname($_SERVER['SCRIPT_NAME']) . '/grader.php';
+    header("Location: $grader_url");
+}
 ?>
 <!doctype html>
 <html lang="en">

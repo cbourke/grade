@@ -5,7 +5,9 @@ $course = Course::createCourse($config['homework_file']);
 $roster = Roster::createRoster($config['mail_file']);
 
 $username = get_username();
-
+if ($username === "TIMED_OUT_USER") {
+    login();
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -74,6 +76,8 @@ $username = get_username();
 
             let title = 'Grading Checker';
             $(document).prop('title', title);
+            let urlParams = new URLSearchParams(window.location.search);
+            let ticket = urlParams.get('ticket');
 
             $("#results").append("<div id='grade_content'><img src='images/loading.gif' alt='loading'/></div>");
 
@@ -83,7 +87,8 @@ $username = get_username();
                 data: {
                     hw_num: document.grade_form.hw_num.value,
                     student_cse_login: studentLogin,
-                    grader_login: '<?php echo $username; ?>'
+                    grader_login: '<?php echo $username; ?>',
+                    ticket,
                 },
                 success: function (data) {
                     $('#grade_content').html(data);
@@ -169,3 +174,4 @@ $username = get_username();
 
 </body>
 </html>
+
