@@ -4,12 +4,10 @@ include_once("GradeInc.php");
 
 $hwNum  = $_POST["hw_num"];
 $login  = trim($_POST["cse_login"]);
-$passwd = $_POST["cse_password"];
 $ip     = $_SERVER['REMOTE_ADDR'];
 $host   = isset($_SERVER['REMOTE_HOST']) ? $_SERVER['REMOTE_HOST'] : "";
 
 $roster          = Roster::createRoster($config['mail_file']);
-$auth            = new CSEAuthenticator($config['authorization_service_token']);
 $student         = findStudentByLogin($roster->getStudents(), $login);
 $handinHome      = $config["webhandin_relative_path"];
 $gradeDir        = "$handinHome/$hwNum/";
@@ -18,7 +16,11 @@ $gradeScriptPath = "$gradeDir$gradeScript";
 $userDir         = "$handinHome/$hwNum/$login";
 $timeout         = $config['global_timeout'];
 
-if(!$auth->authenticate($login, $passwd)) {
+$username_for_ticket = get_username();
+if ($username_for_ticket === "TIMED_OUT_USER") {
+    gradeLog("UNAUTHORIZED ATTEMPT - EXPIRED TICKET: $ip $host $login $hwNum");
+    $result = getBootstrapDiv("Expired Session", "<a onclick=\"window.location.href = window.location.href.split('?')[0].replace(/\/$/, '')\">Click here to reset</a>");
+} else if($login !== $username_for_ticket) {
   //user is not authorized
   gradeLog("UNAUTHORIZED ATTEMPT: $ip $host $login $hwNum");
   $result = getBootstrapDiv("Unauthorized Access Attempt",
@@ -57,4 +59,5 @@ if(!$auth->authenticate($login, $passwd)) {
 print $result;
 
 ?>
+
 
