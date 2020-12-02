@@ -61,6 +61,12 @@ The last of life, for which the first was made",
 "I have come here to chew bubble gum and kick ass.  And I'm all out of bubblegum.",
 "You're tearing me apart, Lisa!",
 "My pen!",
+"A CS course is run with precision
+I personally require nothing less
+Tradition, discipline, and rules must be the tools
+Without them, disorder Chaos
+Moral disintegration
+In short, we have a ghastly mess",
 "It is said that what is called the Spirit of an Age is something to which one cannot return. That this spirit gradually dissipates is due to the world's coming to an end.",
 "For the Angel of Death spread his wings on the blast, And breathed in the face of the foe as he passed: And the eyes of the sleepers waxed deadly and chill, And their hearts but once heaved, and for ever grew still!"
 );
