@@ -7,7 +7,4 @@ foreach($scriptFiles as $file) {
   include_once("$includeDir$file");
 }
 
-// Depricated cse-apps authorization service;
-//include_once("/srv/www/php/include/CSEAuthenticator.php");
-
 ?>
