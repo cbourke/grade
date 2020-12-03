@@ -41,7 +41,7 @@ function gradeLog($msg, $sessionId = "", $ip = "") {
   $date = new DateTime("now", new DateTimeZone("America/Chicago"));
   $dateStamp = $date->format(DateTime::ISO8601);
   global $config;
-  file_put_contents($config["log_file_name"], sprintf("%s (session=%s, ip=%s) %s\n", $dateStamp, $sessionId, $ipAddress, $msg), FILE_APPEND);
+  file_put_contents($config["log_file_name"], sprintf("%s (session=%s, ip=%s) %s\n", $dateStamp, $sessionId, $ip, $msg), FILE_APPEND);
 }
 
 /**
