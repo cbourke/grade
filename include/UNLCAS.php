@@ -7,6 +7,10 @@ $thisService = 'https://cse.unl.edu' . $_SERVER['PHP_SELF'];
 $data_file_name = "persisted_users.json";
 $seconds_until_ticket_timeout = 900;
 
+if(!file_exists($data_file_name)) {
+  file_put_contents($data_file_name, "{}", LOCK_EX);
+}
+
 /**
  * Validates this service with the given <code>$casTicket</code>.
  * Upon success, returns the user name provided by CAS (cse login).
