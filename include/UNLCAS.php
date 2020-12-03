@@ -5,9 +5,6 @@ session_start();
 $casService = 'https://cse-apps.unl.edu/cas';
 $thisService = 'https://cse.unl.edu' . $_SERVER['PHP_SELF'];
 $data_file_name = "persisted_users.json";
-if(!file_exists($data_file_name)) {
-  file_put_contents($data_file_name, "{}", LOCK_EX);
-}
 $seconds_until_ticket_timeout = 900;
 
 /**
@@ -45,10 +42,13 @@ function loadPersistedUser($casTicket) {
     $file_contents = file_get_contents($data_file_name);
     fclose($handleLock);
 
+    if(!$file_contents) {
+      return false;
+    }
     $data = json_decode($file_contents);
     if(isset($data->{$sessionId})) {
       if ($data->{$sessionId}->{'casTicket'} !== $casTicket) {
-        gradeLog("Somthing fishy: Session ID $sessionId is attempting to use ticket $casTicket");
+        gradeLog("Something fishy: Session ID $sessionId is attempting to use ticket $casTicket");
         return false;
       } else if($data->{$sessionId}->{'timeout'} >= time()) {
         return $data->{$sessionId}->{'username'};
@@ -102,7 +102,11 @@ function persistUser($user, $ticket) {
     $handleLock = fopen($data_file_name, "r+");
     flock($handleLock, LOCK_SH);
     $file_contents = file_get_contents($data_file_name);
-    $data = json_decode($file_contents);
+    if(!$file_contents) {
+      $data = stdClass(); 
+    } else {
+      $data = json_decode($file_contents);
+    }
     $data->{$sessionId} = (object)[
         "casTicket" => $ticket,
         "username" => strval($user),
