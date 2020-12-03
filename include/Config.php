@@ -3,7 +3,7 @@
 // change this to provide a link to your course home page in your navigation bar
 $config['homepage'] = "";
 
-$config['version'] = "1.0.0";
+$config['version'] = "3.0.0";
 $config['version_date'] = "2020/12/02";
 
 //log file

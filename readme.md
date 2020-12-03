@@ -13,18 +13,23 @@ A short tutorial video has been made available:
 https://www.youtube.com/watch?v=CRvXsOfp1Vo
 
 ## Installation
-  1. Make sure to have setup the handin for your course (https://cse-apps.unl.edu/handin) including creating all of your assignments and "Sync Assignments" to the CSE file system.
+  1. Make sure to have setup the handin for your course 
+     (https://cse-apps.unl.edu/handin) including creating all of your 
+     assignments and "Sync Assignments" to the CSE file system.
   2. Create a `public_html` directory in your course account and
-  clone this repository to it:
-  `git clone https://github.com/cbourke/grade`
+     clone this repository to it:  
+     `git clone https://github.com/cbourke/grade`
 
 ## Usage
 
 1. Inform your students that they can access the grader interface
 by pointing their browser to https://cse.unl.edu/~classAcct/grade
 Where `classAcct` is the course login (ex: `cse156`).  Graders can
-access a separate grader interface by going to:
+access a separate grader interface by going to:  
 https://cse.unl.edu/~classAcct/grade/grader.php
+A "grader" can login using their CSE credentials if they are listed
+as a TA in the webhandin or they can use the course account credentials.
+
 
 2. The webhandin will automatically sync files that students
 handin to the CSE file system.  These are copies and the originals
@@ -44,7 +49,8 @@ select that assignment to be graded. Additionally:
     need them (examples: source an rc file, or use absolute paths for
     external programs such as compilers, etc.).
     * All output, (stdout and stderr) is output to the user, so beware
-    * The name of the grade script is configurable in the `includes/Config.php` file
+    * The name of the grade script is configurable in the 
+      `includes/Config.php` file
 
 4. Sometimes students turn in garbage code; code that gets caught
 in an infinite loop or has a memory leak, etc.  Though there are
@@ -63,5 +69,5 @@ usual java command, you would use:
 The same limitation would need to be there for the Java compiler:
 `javac -J-Xmx2048m ...`
 
-6. An example grading script written in PHP has been provided (see `/examples`) that can be used to design a testing suite including
-pre- and post- test commands.
+6. An example grading script written in PHP has been provided (see `/examples`) 
+that can be used to design a testing suite including pre- and post- test commands.

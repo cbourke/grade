@@ -16,13 +16,12 @@ $host          = $_SERVER['REMOTE_HOST'];
 $timeout       = $config['global_timeout'];
 
 
-$username_for_ticket = get_username();
-gradeLog($username_for_ticket);
+$username_for_ticket = getUsername();
 if ($username_for_ticket === "TIMED_OUT_USER") {
-  gradeLog("UNAUTHORIZED ATTEMPT - EXPIRED TICKET: $ip $host $grader_login $hwNum");
+  gradeLog("UNAUTHORIZED ATTEMPT - EXPIRED TICKET: $grader_login $hwNum");
   $result = getBootstrapDiv("Expired Session", "<a onclick=\"window.location.href = window.location.href.split('?')[0].replace(/\/$/, '')\">Click here to reset</a>");
 } else if($grader_login === $username_for_ticket && ($grader_login === $courseLogin || $grader != null)) {
-  gradeLog("GRADER ATTEMPT: $ip $host $student_login $hwNum");
+  gradeLog("GRADER ATTEMPT: $student_login $hwNum");
 
   $students = $roster->getStudents();
   $student = findStudentByLogin($students, $student_login);
@@ -68,8 +67,8 @@ if ($username_for_ticket === "TIMED_OUT_USER") {
     printf("<span style='color: red; font-weight: bold'>ERROR: </span> Unable to find student, $student_login");
   }
 } else {
-  $result = "<span style='color: red; font-weight: bold'>ERROR: </span> Unauthorized attempt";
-  gradeLog("UNAUTHORIZED GRADER ATTEMPT: $ip $host $grader_login - $student_login $hwNum");
+  printf("<span style='color: red; font-weight: bold'>ERROR: </span> Unauthorized attempt");
+  gradeLog("UNAUTHORIZED GRADER ATTEMPT: $grader_login - $student_login $hwNum");
 }
 
 ?>
