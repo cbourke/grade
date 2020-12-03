@@ -159,7 +159,7 @@ function logout() {
     global $casService, $thisService;
     $thisService = str_replace('logout.php', '', $thisService);
     //delete the session cookie
-    gradeLog("SESSION ENDING", session_id(), $ip);
+    gradeLog("SESSION ENDING");
     removeSession();
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
