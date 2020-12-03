@@ -5,6 +5,7 @@ include_once("GradeInc.php");
 $hwNum  = $_POST["hw_num"];
 $login  = trim($_POST["cse_login"]);
 $host   = isset($_SERVER['REMOTE_HOST']) ? $_SERVER['REMOTE_HOST'] : "";
+$ip     = $_SERVER['REMOTE_ADDR'];
 
 $roster          = Roster::createRoster($config['mail_file']);
 $student         = findStudentByLogin($roster->getStudents(), $login);
@@ -17,11 +18,11 @@ $timeout         = $config['global_timeout'];
 
 $username_for_ticket = getUsername();
 if ($username_for_ticket === "TIMED_OUT_USER") {
-  gradeLog("UNAUTHORIZED ATTEMPT - EXPIRED TICKET: $login $hwNum");
+  gradeLog("UNAUTHORIZED ATTEMPT - EXPIRED TICKET: $login $hwNum", session_id(), $ip);
   $result = getBootstrapDiv("Expired Session", "<a onclick=\"window.location.href = window.location.href.split('?')[0].replace(/\/$/, '')\">Click here to reset</a>");
 } else if($login !== $username_for_ticket) {
   //user is not authorized
-  gradeLog("UNAUTHORIZED ATTEMPT: $login $hwNum");
+  gradeLog("UNAUTHORIZED ATTEMPT: $login $hwNum", session_id(), $ip);
   $result = getBootstrapDiv("Unauthorized Access Attempt",
                             "Your username/password was incorrect.  This " .
                             "unauthorized attempt has been logged. Big " .
@@ -43,7 +44,7 @@ if ($username_for_ticket === "TIMED_OUT_USER") {
   $result = getBootstrapDiv("Error", "Internal Error Occurred (grade directory does not exist)");
 } else {
   //all is good, go ahead and grade
-  gradeLog("GRADE SUBMISSION: $login $hwNum");
+  gradeLog("GRADE SUBMISSION: $login $hwNum", session_id(), $ip);
   chdir($gradeDir);
   $cmd = "timeout $timeout ./$gradeScript " . escapeshellarg($login) . " 2>&1";
   system($cmd, $exitCode);

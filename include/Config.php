@@ -35,17 +35,11 @@ $config['global_timeout'] = 150;
  * config.php).  Prepends a current date/time stamp and appends an
  * endline character to the message.
  */
-function gradeLog($msg, $sessionId = null, $ip = null) {
+function gradeLog($msg, $sessionId = "", $ip = "") {
   //future proof/config proof: don't rely on the system timezone
   //being set; use our own, Central Time
   $date = new DateTime("now", new DateTimeZone("America/Chicago"));
   $dateStamp = $date->format(DateTime::ISO8601);
-  if(!$sessionId) {
-    $sessionId = session_id();
-  }
-  if(!$ip) {
-    $ip = $_SERVER['REMOTE_ADDR'];
-  }  
   global $config;
   file_put_contents($config["log_file_name"], sprintf("%s (session=%s, ip=%s) %s\n", $dateStamp, $sessionId, $ipAddress, $msg), FILE_APPEND);
 }

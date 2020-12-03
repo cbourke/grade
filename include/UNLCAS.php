@@ -52,7 +52,7 @@ function loadPersistedUser($casTicket) {
     $data = json_decode($file_contents);
     if(isset($data->{$sessionId})) {
       if ($data->{$sessionId}->{'casTicket'} !== $casTicket) {
-        gradeLog("Something fishy: Session ID $sessionId is attempting to use ticket $casTicket");
+        gradeLog("Something fishy: Session ID $sessionId is attempting to use ticket $casTicket", session_id(), $ip);
         return false;
       } else if($data->{$sessionId}->{'timeout'} >= time()) {
         return $data->{$sessionId}->{'username'};
@@ -135,11 +135,12 @@ function getUsername() {
     if ($ticket) {
         $user = "";
         if ($user = loadPersistedUser($ticket)) {
-            return $user;
+          return $user;
         } else if ($user = getCasUserName($ticket)) {
-            persistUser($user, $ticket);
+          gradeLog("USER LOGGED IN: $user", session_id(), $ip);
+          persistUser($user, $ticket);
         } else {
-            login();
+          login();
         }
         return $user;
     } else {
@@ -158,7 +159,7 @@ function logout() {
     global $casService, $thisService;
     $thisService = str_replace('logout.php', '', $thisService);
     //delete the session cookie
-    gradeLog("SESSION ENDING");
+    gradeLog("SESSION ENDING", session_id(), $ip);
     removeSession();
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
