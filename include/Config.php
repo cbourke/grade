@@ -47,7 +47,7 @@ function gradeLog($msg, $sessionId = null, $ip = null) {
     $ip = $_SERVER['REMOTE_ADDR'];
   }  
   global $config;
-  file_put_contents($config["log_file_name"], sprintf("%s (session=%s, ip=%s) %s\n", $dateStamp, $sessionId, $ipAddress, $msg\n, FILE_APPEND);
+  file_put_contents($config["log_file_name"], sprintf("%s (session=%s, ip=%s) %s\n", $dateStamp, $sessionId, $ipAddress, $msg), FILE_APPEND);
 }
 
 /**
