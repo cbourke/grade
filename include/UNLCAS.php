@@ -38,13 +38,13 @@ function loadPersistedUser($casTicket) {
     global $data_file_name;
     $sessionId = session_id();
     $handleLock = fopen($data_file_name, "r");
+    if(!$handleLock) {
+      return false;      
+    }
     flock($handleLock, LOCK_SH);
     $file_contents = file_get_contents($data_file_name);
     fclose($handleLock);
 
-    if(!$file_contents) {
-      return false;
-    }
     $data = json_decode($file_contents);
     if(isset($data->{$sessionId})) {
       if ($data->{$sessionId}->{'casTicket'} !== $casTicket) {
@@ -87,6 +87,8 @@ function removeSession() {
   $file_contents = file_get_contents($data_file_name);
   $data = json_decode($file_contents);
   unset($data->{$sessionId});
+  ftruncate($handleLock, 0);
+  rewind($handleLock);
   fwrite($handleLock, json_encode($data));
   fclose($handleLock);
 }
@@ -103,7 +105,7 @@ function persistUser($user, $ticket) {
     flock($handleLock, LOCK_SH);
     $file_contents = file_get_contents($data_file_name);
     if(!$file_contents) {
-      $data = stdClass(); 
+      $data = new stdClass(); 
     } else {
       $data = json_decode($file_contents);
     }
@@ -113,6 +115,8 @@ function persistUser($user, $ticket) {
         "timeout" => time() + $seconds_until_ticket_timeout,
     ];
     removeExpiredSessions($data);
+    ftruncate($handleLock, 0);
+    rewind($handleLock);
     fwrite($handleLock, json_encode($data));
     fclose($handleLock);
 }
