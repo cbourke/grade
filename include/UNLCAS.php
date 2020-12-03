@@ -29,7 +29,6 @@ function getCasUserName($casTicket) {
         return trim($user);
         
     } else {
-        gradeLog("CAS ERROR: response = $response");
         return false;
     }
 }
