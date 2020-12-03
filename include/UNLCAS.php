@@ -1,66 +1,119 @@
 <?php
 
+session_start();
+
 $casService = 'https://cse-apps.unl.edu/cas';
 $thisService = 'https://cse.unl.edu' . $_SERVER['PHP_SELF'];
 $data_file_name = "persisted_users.json";
+if(!file_exists($data_file_name)) {
+  file_put_contents($data_file_name, "{}", LOCK_EX);
+}
 $seconds_until_ticket_timeout = 900;
-session_start();
 
-function response_for_ticket($ticket) {
+/**
+ * Validates this service with the given <code>$casTicket</code>.
+ * Upon success, returns the user name provided by CAS (cse login).
+ * Upon failure, returns <code>false</code>
+ */
+function getCasUserName($casTicket) {
     global $casService, $thisService;
-    $ticket = trim($ticket);
-    $casGet = "$casService/serviceValidate?ticket=$ticket&service=$thisService";
+    $casTicket = trim($casTicket);
+    $casGet = "$casService/serviceValidate?ticket=$casTicket&service=$thisService";
 
     $response = file_get_contents($casGet);
 
     if (preg_match('/cas:authenticationSuccess/', $response)) {
-        return $response;
+        $xml = simplexml_load_string($response);
+        $user = $xml->children('http://www.yale.edu/tp/cas')->authenticationSuccess->user[0];
+        return trim($user);
+        
     } else {
-        error_log($response);
+        gradeLog("CAS ERROR: response = $response");
         return false;
     }
 }
 
-function get_username_from_persisted_data($ticket) {
+/**
+ * Attempts to load and return the user name (cse login) persisted in
+ * the local session/user file
+ */
+function loadPersistedUser($casTicket) {
     global $data_file_name;
-    if ($file_contents = file_get_contents($data_file_name)) {
-        $data = json_decode($file_contents);
-        if (isset($data->{$ticket})) {
-            if ($data->{$ticket}->{'timeout'} >= time()) {
-                return $data->{$ticket}->{'username'};
-            } else {
-                return "TIMED_OUT_USER";
-            }
-        }
+    $sessionId = session_id();
+    $handleLock = fopen($data_file_name, "r");
+    flock($handleLock, LOCK_SH);
+    $file_contents = file_get_contents($data_file_name);
+    fclose($handleLock);
+
+    $data = json_decode($file_contents);
+    if(isset($data->{$sessionId})) {
+      if ($data->{$sessionId}->{'casTicket'} !== $casTicket) {
+        gradeLog("Somthing fishy: Session ID $sessionId is attempting to use ticket $casTicket");
+        return false;
+      } else if($data->{$sessionId}->{'timeout'} >= time()) {
+        return $data->{$sessionId}->{'username'};
+      } else {
+        return "TIMED_OUT_USER";
+      }
     } else {
-        file_put_contents($data_file_name, "{}");
+      return false;
     }
-    return false;
 }
 
-function prune_data($data) {
-    foreach ($data as $ticket => $entry) {
-        if ($entry->{'timeout'} <= time()) {
-            unset($data->{$ticket});
-        }
+/**
+ * Given a map of <code>$data</code> mapping session IDs to
+ * ticket/username/expire time data, iterates through and removes
+ * any expired entries.
+ */
+function removeExpiredSessions(&$data) {
+  $now = time();
+  foreach($data as $sessionId => $entry) {
+    if($entry->{'timeout'} <= $now) {
+      unset($data->{$sessionId});
     }
-    return $data;
+  }
+  return;
 }
 
-function persist_user($user, $ticket) {
+/**
+ * Removes the session data from the local session json
+ * file for this session.
+ */
+function removeSession() {
+  global $data_file_name;
+  $sessionId = session_id();
+  $handleLock = fopen($data_file_name, "r+");
+  flock($handleLock, LOCK_SH);
+  $file_contents = file_get_contents($data_file_name);
+  $data = json_decode($file_contents);
+  unset($data->{$sessionId});
+  fwrite($handleLock, json_encode($data));
+  fclose($handleLock);
+}
+
+/**
+ * Persists session data to the local session json file.
+ * Also removes all expired sessions before saving the 
+ * json file.
+ */
+function persistUser($user, $ticket) {
     global $data_file_name, $seconds_until_ticket_timeout;
-    $data = new stdClass();
-    if ($file_contents = file_get_contents($data_file_name)) {
-        $data = json_decode($file_contents);
-    }
-    $data->{$ticket} = (object)[
+    $sessionId = session_id();
+    $handleLock = fopen($data_file_name, "r+");
+    flock($handleLock, LOCK_SH);
+    $file_contents = file_get_contents($data_file_name);
+    $data = json_decode($file_contents);
+    $data->{$sessionId} = (object)[
+        "casTicket" => $ticket,
         "username" => strval($user),
         "timeout" => time() + $seconds_until_ticket_timeout,
     ];
-    file_put_contents($data_file_name, json_encode(prune_data($data)));
+    removeExpiredSessions($data);
+    fwrite($handleLock, json_encode($data));
+    fclose($handleLock);
 }
 
-function get_username() {
+function getUsername() {
     $ticket = null;
     if ($_SERVER["REQUEST_METHOD"] == "GET" && $_GET["ticket"]) {
         $ticket = $_GET["ticket"];
@@ -69,13 +122,10 @@ function get_username() {
     }
     if ($ticket) {
         $user = "";
-        if ($stored_ticket = get_username_from_persisted_data($ticket)) {
-            return $stored_ticket;
-        } else if ($response = response_for_ticket($ticket)) {
-            $xml = simplexml_load_string($response);
-            $user = $xml->children('http://www.yale.edu/tp/cas')->authenticationSuccess->user[0];
-            $user = trim($user);
-            persist_user($user, $ticket);
+        if ($user = loadPersistedUser($ticket)) {
+            return $user;
+        } else if ($user = getCasUserName($ticket)) {
+            persistUser($user, $ticket);
         } else {
             login();
         }
@@ -95,12 +145,16 @@ function login() {
 function logout() {
     global $casService, $thisService;
     $thisService = str_replace('logout.php', '', $thisService);
-
-    if (isset($_SESSION['cas_user'])) {
-        unset($_SESSION['cas_user']);
-        unset($_SESSION['timeout']);
-        session_destroy();
+    //delete the session cookie
+    removeSession();
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
     }
+    session_destroy();
     header("Location: $casService/logout?service=$thisService");
 }
 

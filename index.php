@@ -4,7 +4,7 @@ include_once("GradeInc.php");
 
 $course = Course::createCourse($config['homework_file']);
 
-$username = get_username();
+$username = getUsername();
 if ($username === "TIMED_OUT_USER") {
     login();
 } else if ($username == $course->getCourseNumber()) {
