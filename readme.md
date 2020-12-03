@@ -23,13 +23,13 @@ https://www.youtube.com/watch?v=CRvXsOfp1Vo
 ## Usage
 
 1. Inform your students that they can access the grader interface
-by pointing their browser to https://cse.unl.edu/~classAcct/grade
+by pointing their browser to  
+https://cse.unl.edu/~classAcct/grade  
 Where `classAcct` is the course login (ex: `cse156`).  Graders can
 access a separate grader interface by going to:  
-https://cse.unl.edu/~classAcct/grade/grader.php
+https://cse.unl.edu/~classAcct/grade/grader.php  
 A "grader" can login using their CSE credentials if they are listed
 as a TA in the webhandin or they can use the course account credentials.
-
 
 2. The webhandin will automatically sync files that students
 handin to the CSE file system.  These are copies and the originals

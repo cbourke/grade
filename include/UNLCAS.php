@@ -72,6 +72,7 @@ function removeExpiredSessions(&$data) {
   $now = time();
   foreach($data as $sessionId => $entry) {
     if($entry->{'timeout'} <= $now) {
+      gradeLog("REMOVING EXPIRED SESSION ID $sessionId");
       unset($data->{$sessionId});
     }
   }
