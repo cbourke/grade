@@ -41,6 +41,10 @@ The last of life, for which the first was made",
 "Swine merchant, your time is near at hand... Your presence here affects the mind of my people like a fever.  You, yakoo, are the bearer of 9,999 disseases: evil, corrupt pork-chop-eating atrocities!",
 "It is a civilization which has destroyed the simplicity and repose of life; replaced its contentment, its poetry, its soft romance-dreams and visions with the money-fever, sordid ideals, vulgar ambitions, and the sleep which does not refresh; it has invented a thousand useless luxuries, and turned them into necessities; it has created a thousand vicious appetites and satisfies none of them; it has dethroned God and set up a shekel in His place.",
 "Be Aggressive, B-E-Agressive!",
+"We must not look at goblin men,
+We must not buy their fruits:
+Who knows upon what soil they fed
+Their hungry thirsty roots?",
 "Pretty much everywhere, its gonna be hot",
 "Never put salt in your eyes",
 "I'm going to ruin your bobbum with my equipmunk!!",
