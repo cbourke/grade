@@ -33,7 +33,7 @@ class Process {
   }
 
   public function getTotalTimeSeconds() {
-    $toks = split(":", $this->totalTime);
+    $toks = explode(":", $this->totalTime);
     return ($toks[0] * 60 + $toks[1] * 1.0);
   }
 
@@ -47,14 +47,14 @@ class Process {
       $cmd .= "$tokens[$i] ";
     }
 
-    $proc = new Process($tokens[0], 
+    $proc = new Process($tokens[0],
     	    		$tokens[1],
 			$tokens[2],
 			$tokens[3],
 			$tokens[8],
 			$tokens[9],
 			$cmd);
-    return $proc;			
+    return $proc;
   }
 
   public function __toString() {
@@ -64,7 +64,7 @@ class Process {
 
   public static function getCurrentProcesses() {
 
-    $result = Array();    
+    $result = Array();
     $runResult = "";
     $exitCode = "";
     exec("ps ux", $runResult, $exitCode);
