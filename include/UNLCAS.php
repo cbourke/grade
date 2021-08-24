@@ -15,6 +15,11 @@ if(!file_exists($data_file_name)) {
  * Validates this service with the given <code>$casTicket</code>.
  * Upon success, returns the user name provided by CAS (cse login).
  * Upon failure, returns <code>false</code>
+ *
+ * The CAS authentication service ultimately uses Active Directory
+ * which is case insensitive with respect to user names.  This
+ * function will *always* return the user name in all lower case
+ * to ensure compatibility with the intended unix environment.
  */
 function getCasUserName($casTicket) {
     global $casService, $thisService;
@@ -26,8 +31,8 @@ function getCasUserName($casTicket) {
     if (preg_match('/cas:authenticationSuccess/', $response)) {
         $xml = simplexml_load_string($response);
         $user = $xml->children('http://www.yale.edu/tp/cas')->authenticationSuccess->user[0];
-        return trim($user);
-        
+        return strtolower(trim($user));
+
     } else {
         return false;
     }
@@ -42,7 +47,7 @@ function loadPersistedUser($casTicket) {
     $sessionId = session_id();
     $handleLock = fopen($data_file_name, "r");
     if(!$handleLock) {
-      return false;      
+      return false;
     }
     flock($handleLock, LOCK_SH);
     $file_contents = file_get_contents($data_file_name);
@@ -99,7 +104,7 @@ function removeSession() {
 
 /**
  * Persists session data to the local session json file.
- * Also removes all expired sessions before saving the 
+ * Also removes all expired sessions before saving the
  * json file.
  */
 function persistUser($user, $ticket) {
@@ -109,7 +114,7 @@ function persistUser($user, $ticket) {
     flock($handleLock, LOCK_SH);
     $file_contents = file_get_contents($data_file_name);
     if(!$file_contents) {
-      $data = new stdClass(); 
+      $data = new stdClass();
     } else {
       $data = json_decode($file_contents);
     }
@@ -171,4 +176,3 @@ function logout() {
     session_destroy();
     header("Location: $casService/logout?service=$thisService");
 }
-
