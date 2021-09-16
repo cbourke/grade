@@ -8,12 +8,13 @@
  */
 abstract class Tester {
 
-  const version = "2.2.4";
+  const version = "2.2.5";
   const consoleLogFilePath = "~/public_html/grade/grade.log";
 
   private static $collapseIdCounter = 100;
   public static $borderStyle = "none;"; //1px solid red;";
 
+  public static $PRINT_EXIT_CODE = false;
   public static $exitCodes = array(0   => "No Error",
   	 		     	   127 => "'Something wrong with the machine?' (Yeah, that's the best POSIX documentation I could find--awesome, right?)",
 				   134 => "Your job received an abort signal, weird, huh?",
@@ -33,13 +34,13 @@ abstract class Tester {
     }
     return $result;
   }
-  
+
   /**
-   * Creates and returns an HTML div containing log entries for 
+   * Creates and returns an HTML div containing log entries for
    * the currently graded assignment/login.
    */
   public static function getLogs() {
-    
+
     $path = getcwd();
     $subPath = substr($path, 19); //assumes "/home/grad/Classes/..."
     $tokens = explode('/', $subPath);
@@ -109,7 +110,7 @@ abstract class Tester {
     }
     return $fileContents;
   }
-  
+
   /**
    * Formats the given $content inside a collapsible <div> element
    */
@@ -149,7 +150,7 @@ abstract class Tester {
     foreach($output as $line) {
       $fullOutput .= $line . "\n";
     }
-    if($exitCode > 0) {
+    if($exitCode > 0 && $PRINT_EXIT_CODE) {
       $exitCodeMsg = isset(Tester::$exitCodes[$exitCode]) ? Tester::$exitCodes[$exitCode] : "Unknown";
       $fullOutput .= "WARNING: process exited with a(n) $exitCodeMsg ($exitCode) error code\n";
     }
@@ -358,7 +359,7 @@ class TestSuite extends Tester {
     }
     return $result;
   }
-  
+
   public function run() {
     $result = "";
     if($this->isGrader) {
