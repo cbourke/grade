@@ -150,7 +150,7 @@ abstract class Tester {
     foreach($output as $line) {
       $fullOutput .= $line . "\n";
     }
-    if($exitCode > 0 && $PRINT_EXIT_CODE) {
+    if($exitCode > 0 && Tester::$PRINT_EXIT_CODE) {
       $exitCodeMsg = isset(Tester::$exitCodes[$exitCode]) ? Tester::$exitCodes[$exitCode] : "Unknown";
       $fullOutput .= "WARNING: process exited with a(n) $exitCodeMsg ($exitCode) error code\n";
     }
