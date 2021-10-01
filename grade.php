@@ -38,7 +38,7 @@ if ($username_for_ticket === "TIMED_OUT_USER") {
                             "do so.  Oh well.");
 } else if(!file_exists($userDir)) {
   //user handin directory does not exist because they didn't hand anything in
-  $result = getBootstrapDiv("Error", "You gotta hand something in first, noob.");
+  $result = getBootstrapDiv("Error", "You gotta hand something into the CSE Handin first, noob.");
 } else if(!file_exists($gradeDir)) {
   //grade directory does not exist
   $result = getBootstrapDiv("Error", "Internal Error Occurred (grade directory does not exist)");
