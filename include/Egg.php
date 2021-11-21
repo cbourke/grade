@@ -71,6 +71,7 @@ Tradition, discipline, and rules must be the tools
 Without them, disorder Chaos
 Moral disintegration
 In short, we have a ghastly mess",
+"You perverter of good language, confound you!",
 "It is said that what is called the Spirit of an Age is something to which one cannot return. That this spirit gradually dissipates is due to the world's coming to an end.",
 "For the Angel of Death spread his wings on the blast, And breathed in the face of the foe as he passed: And the eyes of the sleepers waxed deadly and chill, And their hearts but once heaved, and for ever grew still!"
 );
