@@ -3,9 +3,11 @@
 include_once("GradeInc.php");
 
 $hwNum  = $_POST["hw_num"];
-$login  = trim($_POST["cse_login"]);
+
 $host   = isset($_SERVER['REMOTE_HOST']) ? $_SERVER['REMOTE_HOST'] : "";
 $ip     = $_SERVER['REMOTE_ADDR'];
+
+$username_for_ticket = $login = getUsername();
 
 $roster          = Roster::createRoster($config['mail_file']);
 $student         = findStudentByLogin($roster->getStudents(), $login);
@@ -16,17 +18,10 @@ $gradeScriptPath = "$gradeDir$gradeScript";
 $userDir         = "$handinHome/$hwNum/$login";
 $timeout         = $config['global_timeout'];
 
-$username_for_ticket = getUsername();
+
 if ($username_for_ticket === "TIMED_OUT_USER") {
   gradeLog("UNAUTHORIZED ATTEMPT - EXPIRED TICKET: $login $hwNum");
   $result = getBootstrapDiv("Expired Session", "<a onclick=\"window.location.href = window.location.href.split('?')[0].replace(/\/$/, '')\">Click here to reset</a>");
-} else if($login !== $username_for_ticket) {
-  //user is not authorized
-  gradeLog("UNAUTHORIZED ATTEMPT: $login $hwNum");
-  $result = getBootstrapDiv("Unauthorized Access Attempt",
-                            "Your username/password was incorrect.  This " .
-                            "unauthorized attempt has been logged. Big " .
-                            "Brother is watching.");
 } else if($student === null) {
   //student is not in the roster file
   $result = getBootstrapDiv("User Not Enrolled", "Your username does not appear to be enrolled in this course.");
