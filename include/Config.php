@@ -3,6 +3,10 @@
 // change this to provide a link to your course home page in your navigation bar
 $config['homepage'] = "";
 
+// Set to the course_semester-code of the handin course
+// This must match directory name under the handin directory
+$config['course_dir'] = "CSCE251_1238";
+
 $config['version'] = "3.0.0";
 $config['version_date'] = "2020/12/02";
 
@@ -10,16 +14,16 @@ $config['version_date'] = "2020/12/02";
 $config['log_file_name'] = "grade.log";
 
 //path to the webhandin directory relative to the grade app
-$config['webhandin_relative_path'] = "../../handin/";
+$config['webhandin_relative_path'] = "../../handin/".$config['course_dir']."/";
 
 //homework file
-$config['homework_file'] = "../../homework";
+$config['homework_file'] = "../../handin/".$config['course_dir']."/homework";
 
 //mail file
-$config['mail_file'] = "../../mail.list";
+$config['mail_file'] = "../../handin/".$config['course_dir']."/mail.list";
 
 //(g)ta mail file (Optional to setup. Permits TA's, GTA's, and instructors to grade without logging in as the course)
-$config['ta_mail_file'] = "../../gta-mail.list";
+$config['ta_mail_file'] = "../../handin/".$config['course_dir']."/gta-mail.list";
 
 //name of the grading script that the grade app will use
 $config['script_name'] = "grade.php";
