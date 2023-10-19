@@ -163,8 +163,8 @@ if ($username === "TIMED_OUT_USER") {
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="https://cse-apps.unl.edu/handin" target="_blank">CSE Handin</a>
                     <a class="dropdown-item" href="https://canvas.unl.edu/" target="_blank">Canvas</a>
-                    <a class="dropdown-item" href="https://cse.unl.edu/faq" target="_blank">System FAQ</a>
-                    <a class="dropdown-item" href="https://cse.unl.edu/" target="_blank">Department Home</a>
+                    <a class="dropdown-item" href="https://computing.unl.edu/faq" target="_blank">System FAQ</a>
+                    <a class="dropdown-item" href="https://computing.unl.edu/" target="_blank">Department Home</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item"
                        href="https://github.com/cbourke/grade/">Version <?php print $config['version']; ?></a>
