@@ -17,30 +17,35 @@ Note: the tutorial video uses CSE login credentials, you will instead use your M
   1. Handin can now be configured to use your own account for handin assignments 
      or a separate, local class account on the **cse-linux-01** server. Local class
      accounts created will have a `c-` prefix to your faculty MyRed login, e.g. `c-bourke2`.
+     The class accounts replace the previous handin account and offer a persistent way to
+     maintain past handin data for courses. Local class accounts will now have classes
+     separated under the ~/handin directory by semester, e.g. ~/handin/CSE251_1238 for CSCE251 in Fall 2023.
      When requesting a handin account for a course, please indicate if you want to
      host the handin assignments in your own directory or in a course account.
-  2. Verify the setup the handin account for your course using the handin interface 
-     (https://cse-apps.unl.edu/handin). A connectivity test will verify if the handin
-     application can access your cse-linux-01 account and the handin directory within it.
-     
-  3. Create all of your assignments and "Sync Assignments" to the **cse-linux-01** server.
-  4. Create a `public_html` directory in your class account and
+  3. Login to the handin system and verify your course has been configured. Before you can sync, you will need to
+     copy the public key shown in the connectivity test into the local class account's
+     **.ssh/authorized_keys** file, e.g. ~c-cbourke2/.ssh/authorized_keys.
+  4. Create all of your assignments and "Sync Assignments" to the **cse-linux-01** server.    
+  5. Create a `public_html` directory in your local class account and
      clone this repository to it:  
      `git clone https://github.com/cbourke/grade`
+  6. Modify the GradeInc.php, grader.php and index.php to contain the path to your local class account directories & files.
+     Usually only the class account home directory name is all that is required in these files. Modify Include/Config.php with the
+     relative paths to the handin/CourseName for webhandin_relative_path, homework_file, and mail_file.
 
 ## Usage
 
 1. Inform your students that they can access the grader interface
 by pointing their browser to  
-https://cse.unl.edu/~classAcct/grade  
-Where `classAcct` is either your own account or the separate local class account (ex: `c-cbourke2` for a local class account).  Graders can
+https://cse-linux-01.unl.edu/~classAcct/grade  
+Where `classAcct` is either your own account or the separate local class account (ex: `c-cbourke2` for a local faculty account, or `csce251` for a local class account).  Graders can
 access a separate grader interface by going to:  
-https://cse.unl.edu/~classAcct/grade/grader.php  
-A "grader" can login using their CSE credentials if they are listed
-as a TA in the webhandin or they can use the course account credentials.
+https://cse-linux-01.unl.edu/~classAcct/grade/grader.php  
+A "grader" can login using their MyRed credentials if they are listed
+as a TA in the webhandin.
 
 2. The webhandin will automatically sync files that students
-handin to the CSE file system.  These are copies and the originals
+handin to the cse-linux-01.unl.edu file system where webgrader is running.  These are copies and the originals
 are stored in the webhandin's database.  You can modify these files
 but take care as doing so will leave them out of sync with the
 originals stored by webhandin.
@@ -48,7 +53,7 @@ originals stored by webhandin.
 3. The webgrader interface expects that there is a grading script
 called `grade.php` in each assignment subdirectory.  For example,
 for and assignment with a label of `3`, it would expect there to
-be an executable script in `~/handin/3/grade.php`.  If such a file
+be an executable script in `~/handin/course-name/3/grade.php`.  If such a file
 does not exist, the page will work but users will not be able to
 select that assignment to be graded. Additionally:
     * The script can be any shell executable, but it will be execute
