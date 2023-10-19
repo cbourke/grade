@@ -38,7 +38,7 @@ Note: the tutorial video uses CSE login credentials, you will instead use your M
 1. Inform your students that they can access the grader interface
 by pointing their browser to  
 https://cse-linux-01.unl.edu/~classAcct/grade  
-Where `classAcct` is either your own account or the separate local class account (ex: `c-cbourke2` for a local faculty account, or `csce251` for a local class account).  Graders can
+Where `classAcct` is either your own account or the separate local class account (ex: `cbourke2` for your local faculty account, or `c-cbourke2` for a local class account).  Graders can
 access a separate grader interface by going to:  
 https://cse-linux-01.unl.edu/~classAcct/grade/grader.php  
 A "grader" can login using their MyRed credentials if they are listed
@@ -51,7 +51,7 @@ but take care as doing so will leave them out of sync with the
 originals stored by webhandin.
 
 3. The webgrader interface expects that there is a grading script
-called `grade.php` in each assignment subdirectory.  For example,
+called `grade.php` in each course-name/assignment subdirectory.  For example,
 for and assignment with a label of `3`, it would expect there to
 be an executable script in `~/handin/course-name/3/grade.php`.  If such a file
 does not exist, the page will work but users will not be able to
