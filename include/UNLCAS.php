@@ -2,8 +2,8 @@
 
 session_start();
 
-$casService = 'https://cse-apps.unl.edu/cas';
-$thisService = 'https://cse.unl.edu' . $_SERVER['PHP_SELF'];
+$casService='https://shib.unl.edu/idp/profile/cas';
+$thisService='https://cse-linux-01.unl.edu/'.$_SERVER['PHP_SELF'];
 $data_file_name = "persisted_users.json";
 $seconds_until_ticket_timeout = 900;
 
@@ -56,7 +56,7 @@ function loadPersistedUser($casTicket) {
     $data = json_decode($file_contents);
     if(isset($data->{$sessionId})) {
       if ($data->{$sessionId}->{'casTicket'} !== $casTicket) {
-        gradeLog("Something fishy: Session ID $sessionId is attempting to use ticket $casTicket", session_id(), $ip);
+        gradeLog("Something fishy: Session ID $sessionId is attempting to use ticket $casTicket", session_id(), $_SERVER['REMOTE_ADDR']);
         return false;
       } else if($data->{$sessionId}->{'timeout'} >= time()) {
         return $data->{$sessionId}->{'username'};
@@ -137,16 +137,21 @@ function getUsername() {
     } else if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["ticket"]) {
         $ticket = $_POST["ticket"];
     }
-    if ($ticket) {
+    else if (isset($_SESSION['ticket'])) {
+        $ticket = $_SESSION["ticket"];
+    }
+    if($ticket) {
         $user = "";
         if ($user = loadPersistedUser($ticket)) {
           return $user;
         } else if ($user = getCasUserName($ticket)) {
-          gradeLog("USER LOGGED IN: $user", session_id(), $ip);
+          gradeLog("USER LOGGED IN: $user", session_id(),  
+          $_SERVER['REMOTE_ADDR']);
           persistUser($user, $ticket);
         } else {
           login();
         }
+        $_SESSION['ticket'] = $ticket;
         return $user;
     } else {
         login();
