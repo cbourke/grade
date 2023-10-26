@@ -19,9 +19,9 @@ if ($username === "TIMED_OUT_USER") {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Grading Checker</title>
 
-    <script type="text/javascript" src="./js/jquery3.4.1.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="./css/jquery-ui.css">
-    <script type="text/javascript" src="./js/jquery-ui.1.12.1.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-ui.1.13.2.min.js"></script>
 
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
@@ -124,7 +124,7 @@ if ($username === "TIMED_OUT_USER") {
         li.L5, li.L6, li.L7, li.L8 {
             list-style-type: decimal !important;
         }
-        
+
         @media (min-width: 768px) {
             .right-button {
                 position: absolute;
@@ -137,7 +137,7 @@ if ($username === "TIMED_OUT_USER") {
 
 <body onload="redirectHTTPS()">
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="https://github.com/cbourke/grade" target="_blank">CSE Webgrader</a>
+    <a class="navbar-brand" href="https://github.com/cbourke/grade" target="_blank">Webgrader</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -161,7 +161,7 @@ if ($username === "TIMED_OUT_USER") {
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false">Resources</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="https://cse-apps.unl.edu/handin" target="_blank">CSE Handin</a>
+                    <a class="dropdown-item" href="https://cse-apps.unl.edu/handin" target="_blank">Handin</a>
                     <a class="dropdown-item" href="https://canvas.unl.edu/" target="_blank">Canvas</a>
                     <a class="dropdown-item" href="https://computing.unl.edu/faq" target="_blank">System FAQ</a>
                     <a class="dropdown-item" href="https://computing.unl.edu/" target="_blank">Department Home</a>
@@ -198,7 +198,7 @@ if ($username === "TIMED_OUT_USER") {
                 <form name="grade_form" action="grade.php" method="post" onsubmit="return validateSubmit()">
 
                     <div class="form-group row">
-                        <label for="cse_login" class="col-sm-3 col-form-label">CSE Username</label>
+                        <label for="cse_login" class="col-sm-3 col-form-label">Username</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="cse_login" value="<?php echo $username; ?>" disabled>
                         </div>
@@ -274,8 +274,8 @@ if ($username === "TIMED_OUT_USER") {
                         versions are archived, but only the most recently handed-in version will be considered.</p>
 
                     <li><b>What is webgrader</b></li>
-                    <p>Webgrader is the companion system that allows you to run the same script(s) that we.ll run when
-                        we grade your assignments. You can use it to determine if your program(s) will compile and
+                    <p>Webgrader is the companion system that allows you to run the same script(s) that graders run when
+                        they grade your assignments. You can use it to determine if your program(s) will compile and
                         execute as specified. You can regrade yourself as many times as you like. Keep in mind that
                         webgrader should be your last sanity check. It is not a useful tool for debugging or figuring
                         out what is wrong with your program(s). You should thoroughly test and debug your code prior to
@@ -288,29 +288,10 @@ if ($username === "TIMED_OUT_USER") {
                         you rely on the webgrader; and b) you need to follow instructions on how input should be given
                         and handled (command line arguments, not re-prompting when given bad input, etc.)</p>
 
-                    <li><b>Okay, I used webgrader and I get something like the following error:</b>
-                        <code>Exception in thread "main" java.lang.NoClassDefFoundError: unl/cse/Foo</code></li>
-
-                    <p>Your source file(s) likely did not compile correctly, so when the grader went to run your class,
-                        it couldn't find it because the compilation failed. The compiler errors should be output by the
-                        grader; address them and try again. It may also be related to the next question.</p>
-
-                    <li><b>I used webgrader, there were <i>no</i> compiler errors, but I still get the <code>NoClassDefFoundError</code>
-                            exception.</b></li>
-
-                    <p>You may have failed to follow instructions and either placed your code in an incorrectly named
-                        class or in the wrong package. Double check what the expectations are on your class and package
-                        names.</p>
-
                     <li><b>Okay, so webgrader is still failing, but I don't know why. Help!</b></li>
 
-                    <p>Webgrader is not a debugging tool. You need to debug using the proper tools. You should have
-                        learned the general principles of debugging in 155. If you are new to Eclipse, Java, or have
-                        forgotten how to debug Java using Eclipse, then:</p>
-                    <ul>
-                        <li>Review any materials on debugging from your 155 course</li>
-                        <li>Watch some video tutorials on debugging in your language/IDE</li>
-                    </ul>
+                    <p>Webgrader is not a debugging tool. You need to debug using the proper tools. Contact
+                       your instructor.</p>
                 </ol>
 
             </div>
@@ -322,4 +303,3 @@ if ($username === "TIMED_OUT_USER") {
 </div>
 
 </html>
-

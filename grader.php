@@ -16,10 +16,10 @@ if ($username === "TIMED_OUT_USER") {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Grading Checker</title>
 
-    <script type="text/javascript" src="./js/jquery3.4.1.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="./css/jquery-ui.css">
-    <script type="text/javascript" src="./js/jquery-ui.1.12.1.min.js"></script>
-    
+    <script type="text/javascript" src="./js/jquery-ui.1.13.2.min.js"></script>
+
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
@@ -136,14 +136,14 @@ if ($username === "TIMED_OUT_USER") {
 <div class="col-md-6">
     <form id="grade_form" name="grade_form" action="" method="get">
         <div class="form-group row">
-            <label for="cseLogin" class="col-sm-3 col-form-label">CSE Login</label>
+            <label for="cseLogin" class="col-sm-3 col-form-label">Login</label>
             <div class="col-sm-9">
                 <input class="form-control" type="text" placeholder="<?php print $username; ?>"
                        id="cseLogin" readonly/>
             </div>
         </div>
         <div class="form-group row">
-            <label for="student_cse_login" class="col-sm-3 col-form-label">Student CSE Login</label>
+            <label for="student_cse_login" class="col-sm-3 col-form-label">Student Login</label>
             <div class="col-sm-9">
                 <input class="form-control" type="text" name="student_cse_login" id="student_cse_login"/>
             </div>
@@ -174,4 +174,3 @@ if ($username === "TIMED_OUT_USER") {
 
 </body>
 </html>
-

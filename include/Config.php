@@ -1,14 +1,53 @@
 <?php
 
-// change this to provide a link to your course home page in your navigation bar
+/*
+ * Course/semester-specific configuration - required
+ */
+
+/**
+ * Set to the course_semester-code of the handin course
+ * This must match directory name under the handin directory
+ * Example: CSCE251_1238 (CSCE 251, Fall 2023)
+ * (required)
+ */
+$config['course_dir'] = "REQUIRED";
+
+/*
+ * Course/semester-specific configuration - optional
+ */
+
+/**
+ * Defines a link to your course home page in the navigation bar.
+ */
 $config['homepage'] = "";
 
-// Set to the course_semester-code of the handin course
-// This must match directory name under the handin directory
-$config['course_dir'] = "CSCE251_1238";
+/**
+ * Name of the grading script that the grade app will use.
+ * Change this if you use scripts in a different language;
+ * `grade.py` for example.
+ */
+$config['script_name'] = "grade.php";
 
-$config['version'] = "3.0.0";
-$config['version_date'] = "2020/12/02";
+/**
+ * Name of the grading script that the grader interface will use.
+ */
+$config['script_name_grader'] = "grade.team.php";
+
+/**
+ * Global script timeout duration (in seconds).  Kills the
+ * grading script (and all child processes) after timeout.
+ *
+ * Default: 150 seconds = 2.5 minutes
+ */
+$config['global_timeout'] = 150;
+
+
+/*
+ * General configuration settings; likely you will not need to (or should not)
+ * change these.
+ */
+$config['version'] = "4.0.0";
+$config['version_date'] = "2023/10/xx";
 
 //log file
 $config['log_file_name'] = "grade.log";
@@ -25,19 +64,10 @@ $config['mail_file'] = "../../handin/".$config['course_dir']."/mail.list";
 //(g)ta mail file (Optional to setup. Permits TA's, GTA's, and instructors to grade without logging in as the course)
 $config['ta_mail_file'] = "../../handin/".$config['course_dir']."/gta-mail.list";
 
-//name of the grading script that the grade app will use
-$config['script_name'] = "grade.php";
-
-//name of the grading scrip that the grader interface will use
-$config['script_name_grader'] = "grade.team.php";
-
-//global script timeout duration (seconds)
-$config['global_timeout'] = 150;
 
 /**
- * Appends the given message to the log file (as defined in
- * config.php).  Prepends a current date/time stamp and appends an
- * endline character to the message.
+ * Appends the given message to the log file.  Prepends a current
+ * date/time stamp and appends an endline character to the message.
  */
 function gradeLog($msg, $sessionId = null, $ip = null) {
   //future proof/config proof: don't rely on the system timezone
