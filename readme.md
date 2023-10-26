@@ -14,7 +14,7 @@ https://www.youtube.com/watch?v=CRvXsOfp1Vo
 
 Note: the tutorial video uses CSE login credentials, you will instead use your MyRed login.
 ## Installation
-  1. Handin can now be configured to use your own account for handin assignments 
+  1. Handin can now be configured to use your own account for handin assignments
      or a separate, local class account on the **cse-linux-01** server. Local class
      accounts created will have a `c-` prefix to your faculty MyRed login, e.g. `c-bourke2`.
      The class accounts replace the previous handin account and offer a persistent way to
@@ -62,19 +62,10 @@ select that assignment to be graded. Additionally:
     need them (examples: source an rc file, or use absolute paths for
     external programs such as compilers, etc.).
     * All output, (stdout and stderr) is output to the user, so beware
-    * The name of the grade script is configurable in the 
+    * The name of the grade script is configurable in the
       `includes/Config.php` file
 
-4. Sometimes students turn in garbage code; code that gets caught
-in an infinite loop or has a memory leak, etc.  Though there are
-limits on the server itself, you should establish a crontab to kill
-out-of-control processes.  A script has been provided to do this
-(`processKiller/Process.php`).  An example crontab is provided in
-the same directory.  Failure to install this crontab may mean
-that the sysadmins will suspend your course account until it is
-addressed.
-
-5. Because limits have been placed on processes launched through apache,
+4. Because limits have been placed on processes launched through apache,
 when grading Java programs, you may need to throttle the JVM to use
 no more than 2GB of memory when launched.  To do this, instead of the
 usual java command, you would use:
@@ -82,5 +73,5 @@ usual java command, you would use:
 The same limitation would need to be there for the Java compiler:
 `javac -J-Xmx2048m ...`
 
-6. An example grading script written in PHP has been provided (see `/examples`) 
+5. An example grading script written in PHP has been provided (see `/examples`)
 that can be used to design a testing suite including pre- and post- test commands.
