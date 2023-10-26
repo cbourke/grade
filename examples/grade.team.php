@@ -5,28 +5,27 @@
 include_once('grade.inc.php');
 
 if($argc != 2) {
-  print "Usage: php grade.php cseLogin\n";
+  print "Usage: php grade.php loginId\n";
   exit(1);
 }
 
 $isGrader = true;
-$isHonors = true;
+$isHonors = false;
 
+// Set "global" values for compilers, flag, etc.
 $javac = "javac -J-Xmx2048m";
 $java = "java -Xmx2048m";
 
+$gcc = "/usr/bin/gcc";
+$gccFlags = "-lm -rdynamic";
+
 chdir($argv[1]);
 
-$testSuite = new TestSuite("CSCE 155H/RAIK 183H - Fall 2015 - Assignment 1 Grader Suite");
+//name, expected output, isGrader flag
+$testSuite = new TestSuite("CSCE Hello World Test Suite", null, $isGrader);
 
-//Question 1...
-include_once('grade-investment-c.php');
-include_once('grade-odometer-java.php');
-include_once('grade-bearing-c.php');
-include_once('grade-timedilation-java.php');
-include_once('grade-halflife-c.php');
-include_once('grade-cellphone-java.php');
+include_once('grade-hello-c.php');
 
-print $testSuite->run(); 
+print $testSuite->run();
 
 ?>
