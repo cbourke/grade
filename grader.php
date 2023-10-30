@@ -86,7 +86,6 @@ if ($username === "TIMED_OUT_USER") {
                 data: {
                     hw_num: document.grade_form.hw_num.value,
                     student_cse_login: studentLogin,
-                    grader_login: '<?php echo $username; ?>',
                     ticket,
                 },
                 success: function (data) {

@@ -75,7 +75,7 @@ $config['homework_file'] = $config['handin_path']."homework";
 //mail file
 $config['mail_file'] = $config['handin_path']."mail.list";
 
-//(g)ta mail file (Optional to setup. Permits TA's, GTA's, and instructors to grade without logging in as the course)
+//(g)ta mail file (permits only TA's, GTA's, instructors to grade
 $config['ta_mail_file'] = $config['handin_path']."gta-mail.list";
 
 
