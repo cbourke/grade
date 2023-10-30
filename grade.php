@@ -9,9 +9,9 @@ $ip     = $_SERVER['REMOTE_ADDR'];
 
 $username_for_ticket = $login = getUsername();
 
-$roster          = Roster::createRoster($config['mail_file']);
-$student         = findStudentByLogin($roster->getStudents(), $login);
-$handinHome      = $config["webhandin_relative_path"];
+$course          = Course::createCourse();
+$student         = $course->getStudent($login);
+$handinHome      = $config["handin_path"];
 $gradeDir        = "$handinHome/$hwNum/";
 $gradeScript     = $config["script_name"];
 $gradeScriptPath = "$gradeDir$gradeScript";
@@ -44,7 +44,7 @@ if ($username_for_ticket === "TIMED_OUT_USER") {
   $cmd = "timeout $timeout ./$gradeScript " . escapeshellarg($login) . " 2>&1";
   system($cmd, $exitCode);
   if($exitCode === 124) {
-    //by default, timeout results in an exit code of 124, so 
+    //by default, timeout results in an exit code of 124, so
     //we give them a different message:
     $result = getBootstrapDiv("Error", "Program(s) timed out.  You may have an infinite loop or extremely inefficient program.");
   }
@@ -54,5 +54,3 @@ if ($username_for_ticket === "TIMED_OUT_USER") {
 print $result;
 
 ?>
-
-
