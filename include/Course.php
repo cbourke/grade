@@ -31,6 +31,10 @@ class Course {
     $this->rosterMap[$student->getLogin()] = $student;
   }
 
+  public function getRoster() {
+    return $this->roster;
+  }
+
   public function getAssignments() {
     return $this->assignments;
   }

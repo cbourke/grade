@@ -1,8 +1,7 @@
 <?php
 
 include_once("GradeInc.php");
-$course = Course::createCourse($config['homework_file']);
-$roster = Roster::createRoster($config['mail_file']);
+$course = Course::createCourse();
 
 $username = getUsername();
 if ($username === "TIMED_OUT_USER") {
@@ -36,7 +35,7 @@ if ($username === "TIMED_OUT_USER") {
     <script type="text/javascript">
         <?php
         $jsArray = "[";
-        $students = $roster->getStudents();
+        $students = $course->getRoster();
         $n = count($students);
         for ($i = 0; $i < $n - 1; $i++) {
             $jsArray .= sprintf("{ value: '%s', label: '%s %s'}, ", $students[$i]->getLogin(), $students[$i]->getLogin(), $students[$i]->getName());
@@ -127,7 +126,7 @@ if ($username === "TIMED_OUT_USER") {
 </head>
 
 <body class="container-fluid" onload="redirectHTTPS()">
-<h2><?php print $course->getCourseNumber(); ?> Program Grade Checker - Grader Interface</h2>
+<h2><?php print $config['course_name']; ?> Program Grade Checker - Grader Interface</h2>
 
 <p>This interface is for graders</p>
 
