@@ -1,5 +1,9 @@
 <?php
 
+include_once("Config.php");
+include_once("Assignment.php");
+include_once("Student.php");
+
 class Course {
 
   private $assignments = array();
@@ -22,7 +26,7 @@ class Course {
   }
 
   public function addStudent($student) {
-    $roster[] = $student;
+    $this->roster[] = $student;
   }
 
   public function getAssignments() {
@@ -31,6 +35,7 @@ class Course {
 
   public static function createCourse() {
 
+    global $config;
     $result = new Course();
     $handle = fopen($config['homework_file'], "r");
 
@@ -62,16 +67,6 @@ class Course {
       }
     }
 
-    return $result;
-  }
-
-  public function __toString() {
-    $result = "$this->courseNumber";
-    $result .= "\n";
-
-    foreach($this->assignments as $assign) {
-      $result .= "$assign\n";
-    }
     return $result;
   }
 

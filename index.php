@@ -7,9 +7,6 @@ $course = Course::createCourse();
 $username = getUsername();
 if ($username === "TIMED_OUT_USER") {
     login();
-} else if ($username == $course->getCourseNumber()) {
-    $grader_url = dirname($_SERVER['SCRIPT_NAME']) . '/grader.php';
-    header("Location: $grader_url");
 }
 ?>
 <!doctype html>
@@ -148,9 +145,9 @@ if ($username === "TIMED_OUT_USER") {
             <li class="nav-item active">
                 <?php
                 if ($config['homepage']) {
-                    print '<a class="nav-link" target="_blank" href="' . $config['homepage'] . '">' . $config['courseName'] . '</a>';
+                    print '<a class="nav-link" target="_blank" href="' . $config['homepage'] . '">' . $config['course_name'] . '</a>';
                 } else {
-                    print '<a class="nav-link">' . $config['courseName'] . '</a>';
+                    print '<a class="nav-link">' . $config['course_name'] . '</a>';
                 }
                 ?>
             </li>

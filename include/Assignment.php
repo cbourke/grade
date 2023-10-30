@@ -44,7 +44,7 @@ class Assignment {
     $graderGradeScriptExists = false;
 
     global $config;
-    $webhandin_home = $config["webhandin_relative_path"];
+    $webhandin_home = $config["handin_path"];
 
     $gradeDir = "$webhandin_home$number/";
     $gradeScript = $config["script_name"];

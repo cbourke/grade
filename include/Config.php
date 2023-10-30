@@ -19,7 +19,11 @@ $config['course_dir'] = "REQUIRED";
  */
 $config['course_name'] = "REQUIRED";
 
-$config['base_dir'] = "~/handin/";
+/**
+ * Set the `USER` portion of this path to the course account
+ * user name (ex: `c-cbourke3`)
+ */
+$config['base_dir'] = "/home/USER/handin/";
 
 /*
  * Course/semester-specific configuration - optional
@@ -61,17 +65,18 @@ $config['version_date'] = "2023/11/xx";
 //log file
 $config['log_file_name'] = "grade.log";
 
-//path to the webhandin directory relative to the grade app
-$config['webhandin_relative_path'] = $config['base_dir'].$config['course_dir']."/";
+//absolute path to the handin directory
+// ex: `/home/c-cbourke3/handin/`
+$config['handin_path'] = $config['base_dir'].$config['course_dir']."/";
 
 //homework file
-$config['homework_file'] = $config['base_dir'].$config['course_dir']."/homework";
+$config['homework_file'] = $config['handin_path']."homework";
 
 //mail file
-$config['mail_file'] = $config['base_dir'].$config['course_dir']."/mail.list";
+$config['mail_file'] = $config['handin_path']."mail.list";
 
 //(g)ta mail file (Optional to setup. Permits TA's, GTA's, and instructors to grade without logging in as the course)
-$config['ta_mail_file'] = $config['base_dir'].$config['course_dir']."/gta-mail.list";
+$config['ta_mail_file'] = $config['handin_path']."gta-mail.list";
 
 
 /**
