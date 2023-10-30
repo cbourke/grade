@@ -67,17 +67,7 @@ class Assignment {
     }
     return $tmp;
   }
-    									
+
 }
-
-/*
-$a = Assignment::createAssignment("1 Quicksort homework 2 2003-8-23 14:30 2003-8-25 14:30 ");
-$b = Assignment::createAssignment("2a Quicksort homework 2 2003-8-23 14:30");
-$c = Assignment::createAssignment("2b Quicksort homework 2");
-
-print "$a\n";
-print "$b\n";
-print "$c\n";
-*/
 
 ?>

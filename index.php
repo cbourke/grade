@@ -2,7 +2,7 @@
 
 include_once("GradeInc.php");
 
-$course = Course::createCourse($config['homework_file']);
+$course = Course::createCourse();
 
 $username = getUsername();
 if ($username === "TIMED_OUT_USER") {
@@ -148,9 +148,9 @@ if ($username === "TIMED_OUT_USER") {
             <li class="nav-item active">
                 <?php
                 if ($config['homepage']) {
-                    print '<a class="nav-link" target="_blank" href="' . $config['homepage'] . '">' . $course->getCourseNumber() . '</a>';
+                    print '<a class="nav-link" target="_blank" href="' . $config['homepage'] . '">' . $config['courseName'] . '</a>';
                 } else {
-                    print '<a class="nav-link">' . $course->getCourseNumber() . '</a>';
+                    print '<a class="nav-link">' . $config['courseName'] . '</a>';
                 }
                 ?>
             </li>

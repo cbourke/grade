@@ -2,14 +2,13 @@
 
 class Course {
 
-  private $courseNumber = null;
   private $assignments = array();
-  
+  private $roster = array();
+
   /**
    * The given line is expect to be in the proper format
    */
-  public function __construct() {
-    $this->courseNumber = get_current_user();
+  private function __construct() {
   }
 
   public function getCourseNumber() {
@@ -22,17 +21,18 @@ class Course {
     }
   }
 
+  public function addStudent($student) {
+    $roster[] = $student;
+  }
+
   public function getAssignments() {
     return $this->assignments;
   }
 
-  public static function createCourse($file) {
+  public static function createCourse() {
 
     $result = new Course();
-    if(!file_exists($file)) {
-      return $result;
-    }
-    $handle = fopen($file, "r");
+    $handle = fopen($config['homework_file'], "r");
 
     while(!feof($handle)) {
       $line = fgets($handle);
@@ -44,6 +44,24 @@ class Course {
         }
       }
     }
+
+    $handle = fopen($config['mail_file'], "r");
+
+    while(!feof($handle)) {
+      $line = fgets($handle);
+      if(strlen(trim($line)) > 0) {
+        $tokens = explode(" ", $line);
+        $name = "";
+        for($i=1; $i<count($tokens); $i++) {
+          if(strlen(trim($tokens[$i])) > 1) {
+	          $name .= "$tokens[$i] ";
+	        }
+        }
+        $s = new Student(trim($tokens[0]), trim($name));
+        $result->addStudent($s);
+      }
+    }
+
     return $result;
   }
 
@@ -56,7 +74,7 @@ class Course {
     }
     return $result;
   }
-    									
+
 }
 
 ?>

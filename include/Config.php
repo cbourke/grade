@@ -12,6 +12,15 @@
  */
 $config['course_dir'] = "REQUIRED";
 
+/**
+ * Set this to the course name as you want it to appear
+ * in the navigation bar; in addition, you can set the
+ * homepage below.
+ */
+$config['course_name'] = "REQUIRED";
+
+$config['base_dir'] = "~/handin/";
+
 /*
  * Course/semester-specific configuration - optional
  */
@@ -46,23 +55,23 @@ $config['global_timeout'] = 150;
  * General configuration settings; likely you will not need to (or should not)
  * change these.
  */
-$config['version'] = "4.0.0";
-$config['version_date'] = "2023/10/xx";
+$config['version'] = "4.0.beta";
+$config['version_date'] = "2023/11/xx";
 
 //log file
 $config['log_file_name'] = "grade.log";
 
 //path to the webhandin directory relative to the grade app
-$config['webhandin_relative_path'] = "../../handin/".$config['course_dir']."/";
+$config['webhandin_relative_path'] = $config['base_dir'].$config['course_dir']."/";
 
 //homework file
-$config['homework_file'] = "../../handin/".$config['course_dir']."/homework";
+$config['homework_file'] = $config['base_dir'].$config['course_dir']."/homework";
 
 //mail file
-$config['mail_file'] = "../../handin/".$config['course_dir']."/mail.list";
+$config['mail_file'] = $config['base_dir'].$config['course_dir']."/mail.list";
 
 //(g)ta mail file (Optional to setup. Permits TA's, GTA's, and instructors to grade without logging in as the course)
-$config['ta_mail_file'] = "../../handin/".$config['course_dir']."/gta-mail.list";
+$config['ta_mail_file'] = $config['base_dir'].$config['course_dir']."/gta-mail.list";
 
 
 /**
