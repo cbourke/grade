@@ -59,8 +59,8 @@ $config['global_timeout'] = 150;
  * General configuration settings; likely you will not need to (or should not)
  * change these.
  */
-$config['version'] = "4.0.beta";
-$config['version_date'] = "2023/11/xx";
+$config['version'] = "4.0.1";
+$config['version_date'] = "2023/10/30";
 
 /**
  * Grader log file (same directory as the grade app)
@@ -135,6 +135,7 @@ function getBootstrapDiv($title, $message, $type = "danger") {
  */
 function getGraderLogDiv($login, $assignNum = "") {
 
+  global $config;
   $grepCmd = "grep ' " . $login . " " . $assignNum . "' " . $config["log_file_name"] . " | egrep -v 'GRADER|UNAUTHORIZED'";
   $grepResult = shell_exec($grepCmd);
   if(strlen($grepResult) == 0) {
