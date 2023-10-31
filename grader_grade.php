@@ -25,7 +25,7 @@ if ($username_for_ticket === "TIMED_OUT_USER") {
 
   printf("<h2>Results for " . $student->getName() . " (" . $student->getLogin() . ")</h2>");
   printf("<h3>Homework $hwNum</h3>");
-  $logDiv = getGraderLogDiv($username_for_ticket, $hwNum);
+  $logDiv = getGraderLogDiv($student_login, $hwNum);
   printf($logDiv);
   printf("<div id='grade_content'>");
 

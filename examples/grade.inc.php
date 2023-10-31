@@ -8,7 +8,7 @@
  */
 abstract class Tester {
 
-  const version = "2.2.7";
+  const version = "2.2.8";
 
   private static $collapseIdCounter = 100;
   public static $borderStyle = "none;"; //1px solid red;";
@@ -334,9 +334,6 @@ class TestSuite extends Tester {
 
   public function run() {
     $result = "";
-    if($this->isGrader) {
-      $result .= Tester::getLogs();
-    }
     $result .= parent::run();
     return $result;
   }
