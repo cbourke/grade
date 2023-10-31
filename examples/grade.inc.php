@@ -8,8 +8,7 @@
  */
 abstract class Tester {
 
-  const version = "2.2.5";
-  const consoleLogFilePath = "~/public_html/grade/grade.log";
+  const version = "2.2.7";
 
   private static $collapseIdCounter = 100;
   public static $borderStyle = "none;"; //1px solid red;";
@@ -33,33 +32,6 @@ abstract class Tester {
       $result .= "<p><span style='color: red; font-weight: bold;'>ERROR: </span>File, $fileName does not exist.  Cannot display contents.</p>";
     }
     return $result;
-  }
-
-  /**
-   * Creates and returns an HTML div containing log entries for
-   * the currently graded assignment/login.
-   */
-  public static function getLogs() {
-
-    $path = getcwd();
-    $subPath = substr($path, 19); //assumes "/home/grad/Classes/..."
-    $tokens = explode('/', $subPath);
-    $class = $tokens[0];
-    $assignNum = $tokens[2];
-    $login = $tokens[3];
-
-    $grepCmd = "grep ' " . $login . " " . $assignNum . "' " . self::consoleLogFilePath . " | egrep -v 'GRADER|UNAUTHORIZED'";
-
-    $grepResult = shell_exec($grepCmd);
-    if(strlen($grepResult) == 0) {
-      $grepResult = "<p style='color:#F00'>No WebGrader runs recorded</p>";
-    }
-    $jsCommand = "\$(\"#collapseIdWGR\").toggle(\"blind\"); $(this).text() == \"[-]\"?$(this).text(\"[+]\"):$(this).text(\"[-]\");";
-    $grepHtmlDiv = "<div style='clear: both'>" .
-                   "<h2><span style='cursor: pointer;' onclick='$jsCommand'>[-]</span> WebGrader Runs</h2>".
-                   "</div>\n" .
-                   "<div id='collapseIdWGR' style='margin-left: 2em;'><pre>" . $grepResult . "</pre></div>";
-    return  $grepHtmlDiv;
   }
 
   /**

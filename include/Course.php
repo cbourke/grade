@@ -4,6 +4,10 @@ include_once("Config.php");
 include_once("Assignment.php");
 include_once("Student.php");
 
+/**
+ * Represents a course in the handin/grader system.  Includes the
+ * course assignments, roster, and graders.
+ */
 class Course {
 
   private $assignments = array();
@@ -11,9 +15,6 @@ class Course {
   private $rosterMap = array();
   private $graderMap = array();
 
-  /**
-   * The given line is expect to be in the proper format
-   */
   private function __construct() {
   }
 

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Represents an assignment in the handin/grader system.
+ */
 class Assignment {
 
   private $number = null;

@@ -39,7 +39,7 @@ function getCasUserName($casTicket) {
 }
 
 /**
- * Attempts to load and return the user name (cse login) persisted in
+ * Attempts to load and return the user name (canvas login) persisted in
  * the local session/user file
  */
 function loadPersistedUser($casTicket) {
@@ -145,7 +145,7 @@ function getUsername() {
         if ($user = loadPersistedUser($ticket)) {
           return $user;
         } else if ($user = getCasUserName($ticket)) {
-          gradeLog("USER LOGGED IN: $user", session_id(),  
+          gradeLog("USER LOGGED IN: $user", session_id(),
           $_SERVER['REMOTE_ADDR']);
           persistUser($user, $ticket);
         } else {

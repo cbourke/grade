@@ -18,8 +18,6 @@ if ($username_for_ticket === "TIMED_OUT_USER") {
 } else if( !$course->isGrader($username_for_ticket) ) {
   gradeLog("UNAUTHORIZED ATTEMPT - USER IS NOT A GRADER: $username_for_ticket $hwNum");
   printf("<span style='color: red; font-weight: bold'>ERROR: </span> You do not appear to be a grader in this course.  Please contact the instructor.");
-  //force a logout
-  //logout();
 } else if( $student === null ) {
   printf("<span style='color: red; font-weight: bold'>ERROR: </span> Student <code>$student_login</code> does not appear to be enrolled in this course.");
 } else {
@@ -27,6 +25,8 @@ if ($username_for_ticket === "TIMED_OUT_USER") {
 
   printf("<h2>Results for " . $student->getName() . " (" . $student->getLogin() . ")</h2>");
   printf("<h3>Homework $hwNum</h3>");
+  $logDiv = getGraderLogDiv($username_for_ticket, $hwNum);
+  printf($logDiv);
   printf("<div id='grade_content'>");
 
   $webhandin_home = $config["handin_path"];

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Represents a student in the handin/grader system.  By default
+ * all instructors and graders are included as students to enable
+ * them to handin, grade, and troubleshoot files.
+ */
 class Student {
 
   private $name = null;
