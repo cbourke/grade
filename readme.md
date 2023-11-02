@@ -59,16 +59,16 @@ it will require extra configuration changes that are not documented here.
 ## Configuration
 
 1. Be sure to setup all assignments and TAs (graders) in the SoC handin system
-   and sync these with the grader.  This will automatically create `homework`
-   and `mail.list` files in the handin directory (`~handin/CLASS`).
+   and sync these with the grader.  This will automatically create the following
+   files in the handin directory (`~handin/CLASS`).
+     * `homework` - a formatted list of assignments and due dates
+     * `mail.list` - a full roster (instructors, graders, students)
+     * `gta-mail.list` a list of instructors and graders
 
-2. Copy the lines from the `mail.list` to a `gta-mail.list` file in the same
-   directory for anyone you want to give grader access to.
-
-3. Edit the `grade/include/Config.php` file and specify the 3 required items as
+2. Edit the `grade/include/Config.php` file and specify the 3 required items as
    indicated in the file.
 
-4. Setup your grading scripts.  By default, the grader app expects that there
+3. Setup your grading scripts.  By default, the grader app expects that there
    is a grading script called `grade.php` in *each* `CLASS/ASSIGNMENT`
    subdirectory.  For example, for and assignment with a label of `3`, it
    would expect there to be an *executable* script in `~/handin/CLASS/3/grade.php`.  
