@@ -89,15 +89,18 @@ class Course {
     while(!feof($handle)) {
       $line = fgets($handle);
       if(strlen(trim($line)) > 0) {
-        $tokens = explode(" ", $line);
-        $name = "";
-        for($i=1; $i<count($tokens); $i++) {
-          if(strlen(trim($tokens[$i])) > 1) {
-	          $name .= "$tokens[$i] ";
-	        }
+        //mail.list and gta-mail.list line format:
+        //cbourke3 chris.bourke@unl.edu (Christopher Bourke)
+        // however, students can have many names, not just last/first
+        // limit to 3
+        $tokens = explode(" ", $line, 3);
+        if(count($tokens) == 3) {
+          $canvasLogin = $tokens[0];
+          $email = $tokens[1];
+          $name = $tokens[2]
+          $s = new Student(trim($canvasLogin), trim($name));
+          $result->addStudent($s);
         }
-        $s = new Student(trim($tokens[0]), trim($name));
-        $result->addStudent($s);
       }
     }
 
@@ -106,17 +109,12 @@ class Course {
       //only process if the file existed
       while(!feof($handle)) {
         $line = fgets($handle);
-        if(strlen(trim($line)) > 0) {
-          $tokens = explode(" ", $line);
-          $name = "";
-          for($i=1; $i<count($tokens); $i++) {
-            if(strlen(trim($tokens[$i])) > 1) {
-              $name .= "$tokens[$i] ";
-            }
-          }
-          $login = trim($tokens[0]);
-          $name  = trim($name);
-          $result->addGrader($login, $name);
+        $tokens = explode(" ", $line, 3);
+        if(count($tokens) == 3) {
+          $canvasLogin = $tokens[0];
+          $email = $tokens[1];
+          $name = $tokens[2]
+          $result->addGrader(trim($canvasLogin), trim($name));
         }
       }
     }
