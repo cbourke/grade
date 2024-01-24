@@ -97,7 +97,7 @@ class Course {
         if(count($tokens) == 3) {
           $canvasLogin = $tokens[0];
           $email = $tokens[1];
-          $name = $tokens[2]
+          $name = $tokens[2];
           $s = new Student(trim($canvasLogin), trim($name));
           $result->addStudent($s);
         }
@@ -113,7 +113,7 @@ class Course {
         if(count($tokens) == 3) {
           $canvasLogin = $tokens[0];
           $email = $tokens[1];
-          $name = $tokens[2]
+          $name = $tokens[2];
           $result->addGrader(trim($canvasLogin), trim($name));
         }
       }
