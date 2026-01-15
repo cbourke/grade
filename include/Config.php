@@ -59,7 +59,7 @@ $config['global_timeout'] = 150;
  * General configuration settings; likely you will not need to (or should not)
  * change these.
  */
-$config['version'] = "4.0.1";
+$config['version'] = "4.0.3";
 $config['version_date'] = "2026-01-15";
 
 /**
