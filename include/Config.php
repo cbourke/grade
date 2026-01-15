@@ -59,8 +59,8 @@ $config['global_timeout'] = 150;
  * General configuration settings; likely you will not need to (or should not)
  * change these.
  */
-$config['version'] = "4.0.2";
-$config['version_date'] = "2023-11-02";
+$config['version'] = "4.0.1";
+$config['version_date'] = "2026-01-15";
 
 /**
  * Grader log file (same directory as the grade app)

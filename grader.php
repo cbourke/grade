@@ -38,14 +38,14 @@ if ($username === "TIMED_OUT_USER") {
         $students = $course->getRoster();
         $n = count($students);
         for ($i = 0; $i < $n - 1; $i++) {
-            $jsArray .= sprintf("{ value: '%s', label: '%s %s'}, ", $students[$i]->getLogin(), $students[$i]->getLogin(), $students[$i]->getName());
+            $jsArray .= sprintf("{ value: '%s', label: '%s %s'}, ", $students[$i]->getLogin(), $students[$i]->getLogin(), preg_replace("/(?<!\\\\)'/", "\\'", $students[$i]->getName()));
         }
-        $jsArray .= sprintf("{ value: '%s', label: '%s %s'}]", $students[$n - 1]->getLogin(), $students[$i]->getLogin(), $students[$n - 1]->getName());
+        $jsArray .= sprintf("{ value: '%s', label: '%s %s'}]", $students[$n - 1]->getLogin(), $students[$i]->getLogin(), preg_replace("/(?<!\\\\)'/", "\\'", $students[$n - 1]->getName()));
         ?>
-        $loginArray = <?php print $jsArray; ?>;
+        loginArray = <?php print $jsArray; ?>;
         $(document).ready(function () {
             $("#student_cse_login").autocomplete({
-                source: $loginArray,
+                source: loginArray,
                 focus: function (event, ui) {
                     $("#student_cse_login").val(ui.item.value);
                     return false;
